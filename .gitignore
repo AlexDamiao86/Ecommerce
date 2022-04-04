@@ -1,0 +1,5 @@
+.DS_Store
+Ecommerce/target/
+Ecommerce/*.class
+Ecommerce/.eclipse
+Ecommerce/.idea
