@@ -3,3 +3,6 @@ Ecommerce/target/
 Ecommerce/*.class
 Ecommerce/.eclipse
 Ecommerce/.idea
+Ecommerce/.classpath
+Ecommerce/.project
+Ecommerce/.settings/
