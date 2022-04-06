@@ -1,5 +1,6 @@
 package br.com.ecommerce.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -9,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity	
-public class Produto {
+public class Produto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer codigo;
@@ -22,6 +26,18 @@ public class Produto {
 	
 	@Column(nullable = false)
 	public Integer quantidade_estoque; 
+	
+	public Produto(Integer codigo, String nome, BigDecimal preco, Integer quantidade_estoque) {
+		super();
+		this.codigo = codigo;
+		this.nome = nome;
+		this.preco = preco;
+		this.quantidade_estoque = quantidade_estoque;
+	}
+	
+	public Produto() {
+		super();
+	}
 	
 	@Override
 	public String toString() {
