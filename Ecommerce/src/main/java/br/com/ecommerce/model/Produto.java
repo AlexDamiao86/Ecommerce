@@ -38,6 +38,9 @@ public class Produto implements Serializable {
 	public Produto() {
 		super();
 	}
+	public Integer getCodigo() {
+		return this.codigo;
+	}
 	
 	@Override
 	public String toString() {
