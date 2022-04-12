@@ -34,14 +34,14 @@ public class Pedido {
 	@JoinColumn(name = "codigo_cliente", referencedColumnName = "codigo")
 	private Cliente cliente;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "sequencial_endereco_entrega", referencedColumnName = "sequencial_endereco")
-	private EnderecoCliente endereco_entrega;
+	@JoinColumn(name = "sequencial_endereco_entrega", referencedColumnName = "idEndereco")
+	private Endereco endereco_entrega;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pedido")
 	private Set<ItemPedido> itemPedido = new LinkedHashSet<ItemPedido>();
 	private EstadoPedido estado;
 	
 	public Pedido(Integer codigo, Date data_pedido, BigDecimal valor_total, Cliente cliente,
-			EnderecoCliente endereco_entrega, Set<ItemPedido> itemPedido, EstadoPedido estado) {
+			Endereco endereco_entrega, Set<ItemPedido> itemPedido, EstadoPedido estado) {
 		super();
 		this.codigo = codigo;
 		this.data_pedido = data_pedido;
@@ -84,11 +84,11 @@ public class Pedido {
 		this.cliente = cliente;
 	}
 
-	public EnderecoCliente getEndereco_entrega() {
+	public Endereco getEndereco_entrega() {
 		return endereco_entrega;
 	}
 
-	public void setEndereco_entrega(EnderecoCliente endereco_entrega) {
+	public void setEndereco_entrega(Endereco endereco_entrega) {
 		this.endereco_entrega = endereco_entrega;
 	}
 
