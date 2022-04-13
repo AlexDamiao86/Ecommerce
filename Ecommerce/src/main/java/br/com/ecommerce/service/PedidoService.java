@@ -63,7 +63,7 @@ public class PedidoService implements IPedidoService{
 			@CacheEvict(value = "allPedidosCache", allEntries = true) })	
 	public Pedido deletePedido(Integer codigo) {
 		System.out.println("deletePedido()");
-		Pedido pedido = pedidoRepository.findByCodigoPedido(codigo);
+		Pedido pedido = pedidoRepository.findByCodigo(codigo);
 		pedido.setEstado(EstadoPedido.CANCELADO);
 		return pedidoRepository.save(pedido);
 	}

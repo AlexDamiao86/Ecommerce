@@ -10,7 +10,7 @@ import br.com.ecommerce.model.Pedido;
 
 public interface PedidoRepository extends CrudRepository<Pedido, Integer> {
 	@Query
-	public Pedido findByCodigoPedido(Integer codigo);
+	public Pedido findByCodigo(Integer codigo);
 	
 	@Query
 	public List<Pedido> findByCliente(Cliente cliente);
