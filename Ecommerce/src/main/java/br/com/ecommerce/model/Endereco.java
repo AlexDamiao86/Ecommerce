@@ -1,18 +1,25 @@
 package br.com.ecommerce.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-@Entity	
-public class Endereco {
+@Entity
+@Table(name="Endereco")
+public class Endereco implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
 	@EmbeddedId
 	private EnderecoFK enderecoFK;
 	
@@ -32,10 +39,11 @@ public class Endereco {
     private EstadoEndereco estadoEndereco; 
     
     @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "cod_cliente_pk_fk", referencedColumnName = "codigo")
     private Cliente cliente;
     
-    @OneToMany(fetch=FetchType.LAZY)
-    private List<Pedido> pedidos = new ArrayList<Pedido>();
+    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "endereco_entrega")
+    private Set<Pedido> pedidos = new HashSet<>();
 	
     public Endereco(String logradouro, int numeroLogradouro, String complemento, 
     		String bairro, String cidade,UF uf, String cep, EstadoEndereco estado) {

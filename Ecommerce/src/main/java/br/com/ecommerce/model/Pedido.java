@@ -34,6 +34,7 @@ public class Pedido {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "codigo_cliente", referencedColumnName = "codigo")
 	private Cliente cliente;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
 	@JoinColumn(name = "sequencial_endereco_entrega", referencedColumnName = "idEndereco"),

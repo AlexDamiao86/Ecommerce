@@ -17,7 +17,7 @@ public class EnderecoService {
 	
 	@Transactional(readOnly = true)
 	public List<Endereco> findAll() {
-		return enderecoRepository.findAll();
+		return (List<Endereco>) enderecoRepository.findAll();
 	}
 	
 	@Transactional

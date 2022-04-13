@@ -29,11 +29,11 @@ public class ItemPedido implements Serializable {
 	private ItemPedidoPK itemPedidoPK;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "codigo")
-	Produto produto;
+	@JoinColumn(name = "cod_produto_fk",referencedColumnName = "codigo")
+	private Produto produto;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "codigo")
+	@JoinColumn(name = "cod_pedido_fk", referencedColumnName = "codigo")
 	private Pedido pedido;
 	
 	@Column(nullable = false)
