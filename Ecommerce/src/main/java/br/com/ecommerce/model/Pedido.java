@@ -35,10 +35,14 @@ public class Pedido {
 	@JoinColumn(name = "codigo_cliente", referencedColumnName = "codigo")
 	private Cliente cliente;
 	@ManyToOne(fetch = FetchType.LAZY)
+<<<<<<< HEAD
 	@JoinColumns({
 	@JoinColumn(name = "sequencial_endereco_entrega", referencedColumnName = "idEndereco"),
 	@JoinColumn(name = "cod_cliente_pk_fk", referencedColumnName = "codCliente")
 	})
+=======
+	@JoinColumn(name = "sequencial_endereco_entrega", referencedColumnName = "idEndereco")
+>>>>>>> branch 'teste' of https://github.com/AlexDamiao86/Ecommerce
 	private Endereco endereco_entrega;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pedido")
 	private Set<ItemPedido> itemPedido = new LinkedHashSet<ItemPedido>();
