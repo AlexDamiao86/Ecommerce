@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -28,12 +29,13 @@ public class Endereco {
 	private UF uf;
 	@Column(nullable = false, length = 10)
 	private String cep;
-    private EstadoEndereco estadodoEndereco; 
+    private EstadoEndereco estadoEndereco; 
     
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="clientes")
-    private List<Cliente> funcionarios = new ArrayList<Cliente>();
-    @OneToOne(fetch=FetchType.LAZY, mappedBy="pedidos")
-    private Pedido pedido;
+    @ManyToOne(fetch=FetchType.LAZY)
+    private Cliente cliente;
+    
+    @OneToMany(fetch=FetchType.LAZY)
+    private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
     public Endereco(String logradouro, int numeroLogradouro, String complemento, 
     		String bairro, String cidade,UF uf, String cep, EstadoEndereco estado) {
@@ -44,7 +46,7 @@ public class Endereco {
 		this.cidade = cidade;
 		this.uf = uf;
 		this.cep = cep;
-		this.estadodoEndereco = estado;
+		this.estadoEndereco = estado;
 	}
 	
 	public String getLogradouro() {
