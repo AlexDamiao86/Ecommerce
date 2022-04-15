@@ -81,6 +81,8 @@ public class ProdutoController {
 			return new ResponseEntity<Produto>(produto, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<Produto>(HttpStatus.NOT_FOUND);
+		} catch (DataIntegrityViolationException | HttpMessageNotReadableException e) {
+			return new ResponseEntity<Produto>(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
