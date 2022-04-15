@@ -12,7 +12,7 @@ import br.com.ecommerce.model.Produto;
 @Repository
 public interface ProdutoRepository extends CrudRepository<Produto, Integer> {
 
-	@Query("select p from Produto p where p.nome = :nome")
+	@Query("select p from Produto p where p.nome LIKE %:nome%")
 	public List<Produto> findByName(@Param("nome") String nome);
 
 
