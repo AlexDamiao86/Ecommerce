@@ -64,9 +64,10 @@ public class ProdutoService implements IProdutoService {
 	@Override
 	@Caching(
 		evict = { 
-			@CacheEvict(value = "produtoCache", key = "#produto.codigo"), 
-			@CacheEvict(value = "allProdutosCache", allEntries = true) 
-		})		
+			@CacheEvict(value = "allProdutosCache", allEntries = true), 
+			@CacheEvict(value = "produtoCache", key = "#codigo")
+		}
+	)
 	public void deleteProduto(Integer codigo) {
 		System.out.println("deleteProduto()");
 		produtoRepository.delete(produtoRepository.findById(codigo).get());
