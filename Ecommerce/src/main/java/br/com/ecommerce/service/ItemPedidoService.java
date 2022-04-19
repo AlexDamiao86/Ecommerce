@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import br.com.ecommerce.model.ItemPedido;
+import br.com.ecommerce.model.ItemPedidoPK;
 import br.com.ecommerce.model.Pedido;
 import br.com.ecommerce.model.Produto;
 import br.com.ecommerce.repository.ItemPedidoRepository;
@@ -31,8 +32,8 @@ public class ItemPedidoService implements IItemPedidoService {
 	}
 	
 	@Override
-	public ItemPedido getItemPedidoByCodigoItemPedido(Integer codigoItemPedido) {
-		return itemPedidoRepository.findByCodigoItemPedido(codigoItemPedido);
+	public ItemPedido getItemPedidoByItemPedidoPK(ItemPedidoPK itemPedidoPK) {
+		return itemPedidoRepository.findByItemPedidoPK(itemPedidoPK);
 	}
 
 	@Override
@@ -51,8 +52,8 @@ public class ItemPedidoService implements IItemPedidoService {
 	}
 
 	@Override
-	public void deleteItemPedido(Integer codigoItemPedido) {
-		itemPedidoRepository.delete(itemPedidoRepository.findByCodigoItemPedido(codigoItemPedido));
+	public void deleteItemPedido(ItemPedidoPK itemPedidoPK) {
+		itemPedidoRepository.delete(itemPedidoRepository.findByItemPedidoPK(itemPedidoPK));
 	}
 
 }

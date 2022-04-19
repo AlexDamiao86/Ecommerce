@@ -19,11 +19,9 @@ public class ItemPedidoController {
 	@Autowired
 	private IItemPedidoService itemPedidoService;
 	
-	@GetMapping("itemPedidos")
+	@GetMapping("/itemPedidos")
 	public ResponseEntity<List<ItemPedido>> getAllItemPedidos(){
 		List<ItemPedido> listaItemPedidos = itemPedidoService.getAllItemPedidos();
 		return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
 	}
-	
-	//TODO: Colocar mais mapeamentos
 }

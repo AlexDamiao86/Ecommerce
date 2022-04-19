@@ -8,9 +8,6 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,10 +17,6 @@ import javax.persistence.Table;
 public class ItemPedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	//Error ID Class @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "SEQITEMPED")
-	private Integer codigoItemPedido;
 	
 	@EmbeddedId
 	private ItemPedidoPK itemPedidoPK;
@@ -53,11 +46,10 @@ public class ItemPedido implements Serializable {
 		this.itemPedidoPK = new ItemPedidoPK(pedido.getCodigo(), produto.getCodigo());
 	}
 	
-	
-	public Integer getCodigoItemPedido() {
-		return codigoItemPedido;
+	// Getters and Setters
+	public ItemPedidoPK getItemPedidoPK() {
+		return itemPedidoPK;
 	}
-	
 	public Produto getProduto() {
 		return produto;
 	}
@@ -81,6 +73,5 @@ public class ItemPedido implements Serializable {
 	}
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
-	}
-	
+	}	
 }
