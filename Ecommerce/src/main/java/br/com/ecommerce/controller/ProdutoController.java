@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,9 +24,12 @@ import java.util.NoSuchElementException;
 
 import br.com.ecommerce.model.Produto;
 import br.com.ecommerce.service.IProdutoService;
+import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping("ecommerce")
+@Api(value = "Cadastro de Produtos")
+@CrossOrigin(origins = "*")
 public class ProdutoController {
 	
 	@Autowired
@@ -90,7 +94,7 @@ public class ProdutoController {
 	public ResponseEntity<Void> deleteProduto(@PathVariable Integer codigo) {
 		try {
 			produtoService.deleteProduto(codigo);
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 		} catch (SpelEvaluationException e) {

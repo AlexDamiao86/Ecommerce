@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/ecommerce")
-@Api(value = "Sistema de comercio eletronico")
+@Api(value = "Controle de Itens-Pedidos")
 @CrossOrigin(origins = "*")
 public class ItemPedidoController {
 	
