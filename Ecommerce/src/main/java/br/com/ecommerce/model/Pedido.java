@@ -45,6 +45,7 @@ public class Pedido {
 	private Set<ItemPedido> itemPedido = new LinkedHashSet<ItemPedido>();
 	private EstadoPedido estado;
 	
+	public Pedido() {};
 	public Pedido(Integer codigo, Date data_pedido, BigDecimal valor_total, Cliente cliente,
 			Endereco endereco_entrega, Set<ItemPedido> itemPedido, EstadoPedido estado) {
 		super();

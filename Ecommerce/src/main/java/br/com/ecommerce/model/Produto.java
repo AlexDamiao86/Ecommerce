@@ -29,6 +29,7 @@ public class Produto implements Serializable {
 	@Column(nullable = false, precision = 7, scale = 2)
 	public BigDecimal preco;
 	
+
 	@Column(nullable = false)
 	public Integer quantidade_estoque; 
 	
@@ -48,6 +49,41 @@ public class Produto implements Serializable {
 	}
 	public Integer getCodigo() {
 		return this.codigo;
+	}
+	public Set<ItemPedido> getItemPedidos() {
+		return itemPedidos;
+	}
+
+	public void setItemPedidos(Set<ItemPedido> itemPedidos) {
+		this.itemPedidos = itemPedidos;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
+	public BigDecimal getPreco() {
+		return preco;
+	}
+	
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+	
+	public Integer getQuantidade_estoque() {
+		return quantidade_estoque;
+	}
+	
+	public void setQuantidade_estoque(Integer quantidade_estoque) {
+		this.quantidade_estoque = quantidade_estoque;
+	}
+	
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
 	}
 	
 	@Override

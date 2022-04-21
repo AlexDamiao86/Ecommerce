@@ -4,23 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
+//import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.ecommerce.model.ItemPedido;
 import br.com.ecommerce.model.ItemPedidoPK;
-import br.com.ecommerce.model.Pedido;
-import br.com.ecommerce.model.Produto;
 import br.com.ecommerce.repository.ItemPedidoRepository;
 
-@Component
+@Service
 public class ItemPedidoService implements IItemPedidoService {
+	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 
-	@Override
-	@Cacheable(value = "allItemPedidosCache", unless = "#result.size() == 0")
+//	@Override
+//	@Cacheable(value = "allItemPedidosCache", unless = "#result.size() == 0")
 	public List<ItemPedido> getAllItemPedidos() {
+		System.out.println("Listando todos os produtos");
 		List<ItemPedido> listaItemPedidos = new ArrayList<>();
 		itemPedidoRepository.findAll().forEach(itemPedido -> listaItemPedidos.add(itemPedido));
 		return listaItemPedidos;
@@ -36,15 +37,13 @@ public class ItemPedidoService implements IItemPedidoService {
 		return itemPedidoRepository.findByItemPedidoPK(itemPedidoPK);
 	}
 
-	@Override
-	public ItemPedido getItemPedidoByPedido(Pedido pedido) {
-		return itemPedidoRepository.findByPedido(pedido);
-	}
-
-	@Override
-	public ItemPedido getItemPedidoByProduto(Produto produto) {
-		return itemPedidoRepository.findByProduto(produto);
-	}
+	/*
+	 * @Override public ItemPedido getItemPedidoByPedido(Pedido pedido) { return
+	 * itemPedidoRepository.findByPedido(pedido); }
+	 * 
+	 * @Override public ItemPedido getItemPedidoByProduto(Produto produto) { return
+	 * itemPedidoRepository.findByProduto(produto); }
+	 */
 
 	@Override
 	public ItemPedido updateItemPedido(ItemPedido itemPedido) {

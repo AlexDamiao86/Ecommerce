@@ -12,8 +12,8 @@ public interface IItemPedidoService {
 	List<ItemPedido> getAllItemPedidos();
 	ItemPedido addItemPedido(ItemPedido itemPedido);
 	ItemPedido getItemPedidoByItemPedidoPK(ItemPedidoPK itemPedidoPK);
-	ItemPedido getItemPedidoByPedido(Pedido pedido);
-	ItemPedido getItemPedidoByProduto(Produto produto);
+//	ItemPedido getItemPedidoByPedido(Pedido pedido);
+//	ItemPedido getItemPedidoByProduto(Produto produto);
 	ItemPedido updateItemPedido(ItemPedido itemPedido);
 	void deleteItemPedido(ItemPedidoPK itemPedidoPK);
 }
