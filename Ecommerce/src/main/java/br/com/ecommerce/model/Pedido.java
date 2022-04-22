@@ -19,9 +19,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
-
-
 @Entity
 @Table(name = "pedidos")
 public class Pedido {
@@ -34,19 +31,17 @@ public class Pedido {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "codigo_cliente", referencedColumnName = "codigo")
 	private Cliente cliente;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumns({
-	@JoinColumn(name = "sequencial_endereco_entrega", referencedColumnName = "idEndereco"),
-	@JoinColumn(name = "cod_cliente_pk_fk", referencedColumnName = "codCliente")
-	})
+	@JoinColumns({ @JoinColumn(name = "sequencial_endereco_entrega", referencedColumnName = "idEndereco"),
+			       @JoinColumn(name = "cod_cliente_pk_fk", referencedColumnName = "cod_cliente_pk_fk") })
 	private Endereco endereco_entrega;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pedido")
 	private Set<ItemPedido> itemPedido = new LinkedHashSet<ItemPedido>();
 	private EstadoPedido estado;
-	
-	public Pedido(Integer codigo, Date data_pedido, BigDecimal valor_total, Cliente cliente,
-			Endereco endereco_entrega, Set<ItemPedido> itemPedido, EstadoPedido estado) {
+
+	public Pedido(Integer codigo, Date data_pedido, BigDecimal valor_total, Cliente cliente, Endereco endereco_entrega,
+			Set<ItemPedido> itemPedido, EstadoPedido estado) {
 		super();
 		this.codigo = codigo;
 		this.data_pedido = data_pedido;
@@ -112,11 +107,5 @@ public class Pedido {
 	public void setEstado(EstadoPedido estado) {
 		this.estado = estado;
 	}
-	
-	
-	
-	
-	
-	
-}
 
+}

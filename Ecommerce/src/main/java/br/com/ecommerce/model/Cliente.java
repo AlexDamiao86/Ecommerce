@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity	
 @Table(name = "cliente")
 public class Cliente implements Serializable {
@@ -41,13 +43,18 @@ public class Cliente implements Serializable {
 	@Column(nullable = false)
 	public Date dataNascimento; 
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cliente")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "enderecoPK.cliente")
+	@JsonManagedReference
 	private Set<Endereco> enderecos = new HashSet<>();	
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cliente")
 	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
 	
+	
+	public Cliente() {
 		
+	}
+	
 	public Cliente(Integer codigo, String nome, String cpf) {
 		super();
 		this.codigo = codigo;
