@@ -21,7 +21,6 @@ public class EnderecoPK implements Serializable{
 	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "cod_cliente_pk_fk", referencedColumnName = "codigo")
-	@JsonBackReference
     private Cliente cliente;
 	
 	public EnderecoPK() {}
