@@ -31,8 +31,32 @@ public class ItemPedidoController {
 	@ApiOperation(value = "Retorna todos os ItemPedidos cadastrados")
 	public ResponseEntity<List<ItemPedido>> getAllItemPedidos(){
 		try {
-		List<ItemPedido> listaItemPedidos = itemPedidoService.getAllItemPedidos();
-		return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
+			List<ItemPedido> listaItemPedidos = itemPedidoService.getAllItemPedidos();
+			return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<List<ItemPedido>>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	// List Todos item-pedidos por codigo de produto
+	@GetMapping("itempedidosporproduto/{codigoProduto}")
+	@ApiOperation(value = "Retorna todos os ItemPedidos de um produto")
+	public ResponseEntity<List<ItemPedido>> findByCodigoProduto(@PathVariable("codigoProduto") Integer codigoProduto){
+		try {
+			List<ItemPedido> listaItemPedidos = itemPedidoService.findByCodigoProduto(codigoProduto);
+			return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<List<ItemPedido>>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	// List Todos item-pedidos por codigo de pedido
+	@GetMapping("itempedidosporpedido/{codigoPedido}")
+	@ApiOperation(value = "Retorna todos os ItemPedidos de um pedido")
+	public ResponseEntity<List<ItemPedido>> findByCodigoPedido(@PathVariable("codigoPedido") Integer codigoPedido){
+		try {
+			List<ItemPedido> listaItemPedidos = itemPedidoService.findByCodigoPedido(codigoPedido);
+			return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<List<ItemPedido>>(HttpStatus.NOT_FOUND);
 		}
@@ -76,14 +100,4 @@ public class ItemPedidoController {
 //	}
 	
 	
-//	@GetMapping("itemPedido/{codigoItemPedido}")
-//	@ApiOperation(value = "Retorna um ItemPedido único")
-//	public ResponseEntity<ItemPedido> getItemPedidoByItemPedidoPK(@PathVariable("codigoItemPedido") ItemPedidoPK itemPedidoPK) {
-//		try {
-//			ItemPedido itemPedido = itemPedidoService.getItemPedidoByItemPedidoPK(itemPedidoPK);
-//			return new ResponseEntity<ItemPedido>(itemPedido, HttpStatus.OK);
-//		} catch (NoSuchElementException e) {
-//			return new ResponseEntity<ItemPedido>(HttpStatus.NOT_FOUND);
-//		}
-//	}
 }

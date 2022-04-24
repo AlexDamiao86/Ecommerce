@@ -30,7 +30,17 @@ public class ItemPedidoService implements IItemPedidoService {
 
 	@Override
 	public ItemPedido getItemPedidoByCodigoItemPedido(Integer codigoItemPedido) {
-		return itemPedidoRepository.findById(codigoItemPedido).get();
+		return itemPedidoRepository.findByCodigoItemPedido(codigoItemPedido);
+	}
+
+	@Override
+	public List<ItemPedido> findByCodigoProduto(Integer codigoProduto) {
+		return itemPedidoRepository.findByCodigoProduto(codigoProduto);
+	}
+	
+	@Override
+	public List<ItemPedido> findByCodigoPedido(Integer codigoPedido) {
+		return itemPedidoRepository.findByCodigoPedido(codigoPedido);
 	}
 	
 //	
@@ -41,10 +51,6 @@ public class ItemPedidoService implements IItemPedidoService {
 //	
 //	  @Override public ItemPedido getItemPedidoByPedido(Pedido pedido) { return
 //	  itemPedidoRepository.findByPedido(pedido); }
-//	  
-//	  @Override public ItemPedido getItemPedidoByProduto(Produto produto) { return
-//	  itemPedidoRepository.findByProduto(produto); }
-	 
 
 //	@Override
 //	public ItemPedido updateItemPedido(ItemPedido itemPedido) {

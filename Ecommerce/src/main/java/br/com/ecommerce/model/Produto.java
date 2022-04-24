@@ -58,6 +58,10 @@ public class Produto implements Serializable {
 //	public void setItemPedidos(Set<ItemPedido> itemPedidos) {
 //		this.itemPedidos = itemPedidos;
 //	}
+	
+	public void vinculaItemPedido(ItemPedido itemPedido) {
+		this.itemPedidos.add(itemPedido);
+	}
 
 	public String getNome() {
 		return nome;

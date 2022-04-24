@@ -62,10 +62,13 @@ public class Pedido implements Serializable {
 		this.valor_total = valor_total;
 		setCliente(cliente);
 		setEndereco_entrega(endereco_entrega);
-		setItemPedido(itemPedido);
+//		setItemPedido(itemPedido);
 		this.estado = estado;
 	}
-
+	public void vinculaItemPedido(ItemPedido itemPedido) {
+		this.itemPedido.add(itemPedido);
+	}
+	
 	public Integer getCodigo() {
 		return codigo;
 	}

@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
@@ -21,18 +20,16 @@ public class ItemPedido implements Serializable {
 	
 	@EmbeddedId
 	private ItemPedidoPK itemPedidoPK;
-	
 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false)
+	@Column
 	private Integer codigoItemPedido;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "codigoProduto",referencedColumnName = "codigo", insertable = false, updatable = false)
-
 	private Produto produto;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "codigoPedido", referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Pedido pedido;
 	
@@ -47,9 +44,11 @@ public class ItemPedido implements Serializable {
 	public ItemPedido(Produto produto, Pedido pedido, Integer quantidade) {
 		this.itemPedidoPK = new ItemPedidoPK(this.codigoItemPedido, pedido.getCodigo(), produto.getCodigo());
 		setProduto(produto);
+		this.produto.vinculaItemPedido(this);
 		this.valor = produto.getPreco();
 		setQuantidade(quantidade);
 		setPedido(pedido);
+		this.pedido.vinculaItemPedido(this);
 	}
 	
 	// Getters and Setters
@@ -66,14 +65,14 @@ public class ItemPedido implements Serializable {
 	}
 	public void setProduto(Produto produtos) {
 		this.produto = produtos;
-		this.produto.getItemPedidos().add(this);
+//		this.produto.getItemPedidos().add(this);
 	}
 	public Pedido getPedido() {
 		return pedido;
 	}
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
-		this.pedido.getItemPedido().add(this);
+//		this.pedido.getItemPedido().add(this);
 	}
 	public int getQuantidade() {
 		return quantidade;
