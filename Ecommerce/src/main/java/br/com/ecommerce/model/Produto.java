@@ -51,13 +51,13 @@ public class Produto implements Serializable {
 	public Integer getCodigo() {
 		return this.codigo;
 	}
-	public Set<ItemPedido> getItemPedidos() {
-		return itemPedidos;
-	}
-
-	public void setItemPedidos(Set<ItemPedido> itemPedidos) {
-		this.itemPedidos = itemPedidos;
-	}
+//	public Set<ItemPedido> getItemPedidos() {
+//		return itemPedidos;
+//	}
+//
+//	public void setItemPedidos(Set<ItemPedido> itemPedidos) {
+//		this.itemPedidos = itemPedidos;
+//	}
 
 	public String getNome() {
 		return nome;

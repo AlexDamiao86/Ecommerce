@@ -15,6 +15,10 @@ public class EnderecoFK implements Serializable{
 	private Integer idEndereco;
 	private Integer codCliente;
 	
+	public EnderecoFK() {
+		
+	}
+	
 	public EnderecoFK(Integer codCliente,Integer idEndereco) {
 		this.codCliente = codCliente;
 		this.idEndereco = idEndereco;

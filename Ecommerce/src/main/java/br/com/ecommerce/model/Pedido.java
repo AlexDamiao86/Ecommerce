@@ -1,5 +1,6 @@
 package br.com.ecommerce.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.LinkedHashSet;
@@ -19,42 +20,49 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 
 @Entity
 @Table(name = "pedidos")
-public class Pedido {
+public class Pedido implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer codigo;
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date data_pedido;
 	private BigDecimal valor_total;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "codigo_cliente", referencedColumnName = "codigo")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "codigo_cliente", referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Cliente cliente;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumns({
 	@JoinColumn(name = "sequencial_endereco_entrega", referencedColumnName = "idEndereco"),
-	@JoinColumn(name = "cod_cliente_pk_fk", referencedColumnName = "codCliente")
+	@JoinColumn(name = "codigo_cliente", referencedColumnName = "codCliente")
 	})
 	private Endereco endereco_entrega;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pedido")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pedido")
 	private Set<ItemPedido> itemPedido = new LinkedHashSet<ItemPedido>();
 	private EstadoPedido estado;
 	
-	public Pedido() {};
+	public Pedido() {
+		
+	}
 	public Pedido(Integer codigo, Date data_pedido, BigDecimal valor_total, Cliente cliente,
 			Endereco endereco_entrega, Set<ItemPedido> itemPedido, EstadoPedido estado) {
 		super();
 		this.codigo = codigo;
 		this.data_pedido = data_pedido;
 		this.valor_total = valor_total;
-		this.cliente = cliente;
-		this.endereco_entrega = endereco_entrega;
-		this.itemPedido = itemPedido;
+		setCliente(cliente);
+		setEndereco_entrega(endereco_entrega);
+		setItemPedido(itemPedido);
 		this.estado = estado;
 	}
 
@@ -81,11 +89,11 @@ public class Pedido {
 	public void setValor_total(BigDecimal valor_total) {
 		this.valor_total = valor_total;
 	}
-
+	@JsonIgnore
 	public Cliente getCliente() {
 		return cliente;
 	}
-
+	@JsonIgnore
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
@@ -98,13 +106,13 @@ public class Pedido {
 		this.endereco_entrega = endereco_entrega;
 	}
 
-	public Set<ItemPedido> getItemPedido() {
-		return itemPedido;
-	}
-
-	public void setItemPedido(Set<ItemPedido> itemPedido) {
-		this.itemPedido = itemPedido;
-	}
+//	public Set<ItemPedido> getItemPedido() {
+//		return itemPedido;
+//	}
+//
+//	public void setItemPedido(Set<ItemPedido> itemPedido) {
+//		this.itemPedido = itemPedido;
+//	}
 
 	public EstadoPedido getEstado() {
 		return estado;

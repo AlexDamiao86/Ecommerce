@@ -41,13 +41,17 @@ public class Cliente implements Serializable {
 	@Column(nullable = false)
 	public Date dataNascimento; 
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cliente")
-	private Set<Endereco> enderecos = new HashSet<>();	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cliente")
+	private Set<Endereco> enderecos = new LinkedHashSet<Endereco>();	
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cliente")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cliente")
 	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
 	
 		
+	public Cliente() {
+		super();
+	}
+
 	public Cliente(Integer codigo, String nome, String cpf) {
 		super();
 		this.codigo = codigo;
@@ -63,8 +67,9 @@ public class Cliente implements Serializable {
 		this.email = email;
 		this.dataNascimento = dataNascimento;
 	}
-
-	@Override
+	
+	
+	/*@Override
 	public String toString() {
 		return "\\nCliente [codigo=" + codigo + 
 			   "\\nNome=" + nome + 
@@ -73,7 +78,7 @@ public class Cliente implements Serializable {
 			   "\\nData de Nascimento=" + dataNascimento + 
 			   "\\nEnderecos=" + enderecos + 
 			   "\\nPedidos=" + pedidos + "]";
-	}
+	}*/
 
 	public Integer getCodigo() {
 		return codigo;
@@ -115,19 +120,19 @@ public class Cliente implements Serializable {
 		this.dataNascimento = dataNascimento;
 	}
 	
-	public Set<Endereco> getEnderecos() {
-		return enderecos;
-	}
+//	public Set<Endereco> getEnderecos() {
+//		return enderecos;
+//	}
+//
+//	public void setEnderecos(Set<Endereco> enderecos) {
+//		this.enderecos = enderecos;
+//	}
 
-	public void setEnderecos(Set<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
-
-	public Set<Pedido> getPedidos() {
-		return pedidos;
-	}
-	public void setPedidos(Set<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}	
+//	public Set<Pedido> getPedidos() {
+//		return pedidos;
+//	}
+//	public void setPedidos(Set<Pedido> pedidos) {
+//		this.pedidos = pedidos;
+//	}	
 
 }
