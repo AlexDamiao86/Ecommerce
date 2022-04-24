@@ -6,12 +6,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Embeddable
 public class EnderecoPK implements Serializable{
@@ -30,11 +26,6 @@ public class EnderecoPK implements Serializable{
 	}
 	
 	
-	public EnderecoPK(Long idEndereco,Cliente cliente) {
-		this.setCliente(cliente);
-		this.idEndereco = idEndereco;
-	}
-	
 	public Long getIdEndereco() {
 		return idEndereco;
 	}
@@ -42,13 +33,9 @@ public class EnderecoPK implements Serializable{
 	public void setIdEndereco(Long idEndereco) {
 		this.idEndereco = idEndereco;
 	}
-
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	
+	public void setCliente(Cliente c) {
+		this.cliente = c;
 	}
 	
 }

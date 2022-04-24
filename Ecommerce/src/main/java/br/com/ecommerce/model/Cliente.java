@@ -129,11 +129,11 @@ public class Cliente implements Serializable {
 		this.enderecos = enderecos;
 	}
 
-	public Set<Pedido> getPedidos() {
-		return pedidos;
-	}
-	public void setPedidos(Set<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}	
+//	public Set<Pedido> getPedidos() {
+//		return pedidos;
+//	}
+//	public void setPedidos(Set<Pedido> pedidos) {
+//		this.pedidos = pedidos;
+//	}	
 
 }

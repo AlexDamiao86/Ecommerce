@@ -156,5 +156,4 @@ public class Endereco implements Serializable{
 	public void setPedidos(Set<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-	
 }
