@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ecommerce.model.ItemPedido;
-import br.com.ecommerce.model.ItemPedidoPK;
 import br.com.ecommerce.service.IItemPedidoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +26,7 @@ public class ItemPedidoController {
 	@Autowired
 	private IItemPedidoService itemPedidoService;
 	
+	// List All
 	@GetMapping("itemPedidos")
 	@ApiOperation(value = "Retorna todos os ItemPedidos cadastrados")
 	public ResponseEntity<List<ItemPedido>> getAllItemPedidos(){
@@ -37,15 +37,53 @@ public class ItemPedidoController {
 			return new ResponseEntity<List<ItemPedido>>(HttpStatus.NOT_FOUND);
 		}
 	}
+
 	
+	// Select 1
 	@GetMapping("itemPedido/{codigoItemPedido}")
-	@ApiOperation(value = "Retorna um ItemPedido único")
-	public ResponseEntity<ItemPedido> getItemPedidoByItemPedidoPK(@PathVariable("codigoItemPedido") ItemPedidoPK itemPedidoPK) {
+	@ApiOperation(value = "Retorna um ItemPedido único pelo codigo")
+	public ResponseEntity<ItemPedido> getItemPedidoByCodigoItemPedido(@PathVariable("codigoItemPedido") Integer codigoItemPedido) {
 		try {
-			ItemPedido itemPedido = itemPedidoService.getItemPedidoByItemPedidoPK(itemPedidoPK);
+			ItemPedido itemPedido = itemPedidoService.getItemPedidoByCodigoItemPedido(codigoItemPedido);
 			return new ResponseEntity<ItemPedido>(itemPedido, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<ItemPedido>(HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	// Select 1
+//	public ResponseEntity<ItemPedido> getItemPedidoByItemPedidoPK(ItemPedidoPK itemPedidoPK) {
+//		try {
+//			ItemPedido itemPedido = itemPedidoService.getItemPedidoByItemPedidoPK(itemPedidoPK);
+//			return new ResponseEntity<ItemPedido>(itemPedido, HttpStatus.OK);
+//		} catch (NoSuchElementException e) {
+//			return new ResponseEntity<ItemPedido>(HttpStatus.NOT_FOUND);
+//		}
+//	}
+	
+	
+	// Insert
+//	@PostMapping("itemPedido")
+//	public ResponseEntity<Void> addItemPedido(@RequestBody ItemPedido itemPedido,UriComponentsBuilder builder) {
+//		try {
+//			ItemPedido itemPedidoSalvo = itemPedidoService.addItemPedido(itemPedido);
+//			HttpHeaders headers = new HttpHeaders();
+//			headers.setLocation(builder.path("/itemPedido/{codigo}").buildAndExpand(itemPedidoSalvo.getItemPedidoPK().getCodigoPedido()).toUri());
+//			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);			
+//		} catch (DataIntegrityViolationException | HttpMessageNotReadableException e) {
+//			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+//		}
+//	}
+	
+	
+//	@GetMapping("itemPedido/{codigoItemPedido}")
+//	@ApiOperation(value = "Retorna um ItemPedido único")
+//	public ResponseEntity<ItemPedido> getItemPedidoByItemPedidoPK(@PathVariable("codigoItemPedido") ItemPedidoPK itemPedidoPK) {
+//		try {
+//			ItemPedido itemPedido = itemPedidoService.getItemPedidoByItemPedidoPK(itemPedidoPK);
+//			return new ResponseEntity<ItemPedido>(itemPedido, HttpStatus.OK);
+//		} catch (NoSuchElementException e) {
+//			return new ResponseEntity<ItemPedido>(HttpStatus.NOT_FOUND);
+//		}
+//	}
 }

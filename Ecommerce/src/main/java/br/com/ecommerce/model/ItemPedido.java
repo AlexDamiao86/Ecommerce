@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -19,6 +21,10 @@ public class ItemPedido implements Serializable {
 	
 	@EmbeddedId
 	private ItemPedidoPK itemPedidoPK;
+	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false)
+	private Integer codigoItemPedido;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "cod_produto_fk",referencedColumnName = "codigo", insertable = false, updatable = false)
@@ -37,7 +43,7 @@ public class ItemPedido implements Serializable {
 	// Construtores
 	public ItemPedido() {};
 	public ItemPedido(Produto produto, Pedido pedido, Integer quantidade) {
-		this.itemPedidoPK = new ItemPedidoPK(pedido.getCodigo(), produto.getCodigo());
+		this.itemPedidoPK = new ItemPedidoPK(this.codigoItemPedido, pedido.getCodigo(), produto.getCodigo());
 		setProduto(produto);
 		this.valor = produto.getPreco();
 		setQuantidade(quantidade);
@@ -45,6 +51,10 @@ public class ItemPedido implements Serializable {
 	}
 	
 	// Getters and Setters
+	public Integer getCodigoItemPedido() {
+		return codigoItemPedido;
+	}
+	
 	public ItemPedidoPK getItemPedidoPK() {
 		return itemPedidoPK;
 	}
