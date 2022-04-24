@@ -21,6 +21,12 @@ public class ClienteService implements IClienteService {
 		System.out.println("getClienteByCpf()");		
 		return clienteRepository.findByCpf(cpf);
 	}
+	@Override		
+	public Cliente getClienteByCodigo(Integer codigo) {
+		System.out.println("getClienteByCodigo()");		
+		return clienteRepository.findByCodigoCliente(codigo);
+	}
+	
 	
 	@Override
 	public List<Cliente> getClienteByNome(String nome) {

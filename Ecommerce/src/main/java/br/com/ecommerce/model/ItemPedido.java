@@ -20,12 +20,12 @@ public class ItemPedido implements Serializable {
 	@EmbeddedId
 	private ItemPedidoPK itemPedidoPK;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "cod_produto_fk",referencedColumnName = "codigo", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "codigoProduto",referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Produto produto;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "cod_pedido_fk", referencedColumnName = "codigo", insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "codigoPedido", referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Pedido pedido;
 	
 	@Column(nullable = false)
