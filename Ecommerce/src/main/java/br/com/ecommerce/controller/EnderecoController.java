@@ -39,7 +39,7 @@ public class EnderecoController {
 	}
 	
 	
-	@PostMapping(value="endereco",consumes = {"application/json"})
+	@PostMapping("endereco")
 	public ResponseEntity<Void> addEndereco(
 			@RequestBody Endereco endereco, 
 			UriComponentsBuilder builder) {

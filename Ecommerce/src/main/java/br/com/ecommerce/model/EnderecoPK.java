@@ -6,24 +6,29 @@ import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Embeddable
 public class EnderecoPK implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQEND")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQEND")
 	private Long idEndereco;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "cod_cliente_pk_fk", referencedColumnName = "codigo")
     private Cliente cliente;
 	
-	public EnderecoPK() {}
+	public EnderecoPK() {
+		
+	}
+	
 	
 	public EnderecoPK(Long idEndereco,Cliente cliente) {
 		this.setCliente(cliente);
