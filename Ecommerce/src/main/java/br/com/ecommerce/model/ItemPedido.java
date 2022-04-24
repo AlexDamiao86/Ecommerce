@@ -44,11 +44,11 @@ public class ItemPedido implements Serializable {
 	public ItemPedido(Produto produto, Pedido pedido, Integer quantidade) {
 		this.itemPedidoPK = new ItemPedidoPK(this.codigoItemPedido, pedido.getCodigo(), produto.getCodigo());
 		setProduto(produto);
-		this.produto.vinculaItemPedido(this);
+//		this.produto.vinculaItemPedido(this);
 		this.valor = produto.getPreco();
 		setQuantidade(quantidade);
 		setPedido(pedido);
-		this.pedido.vinculaItemPedido(this);
+//		this.pedido.vinculaItemPedido(this);
 	}
 	
 	// Getters and Setters

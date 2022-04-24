@@ -9,6 +9,7 @@ public interface IItemPedidoService {
 	List<ItemPedido> getAllItemPedidos();
 //	ItemPedido addItemPedido(ItemPedido itemPedido);
 	ItemPedido getItemPedidoByCodigoItemPedido(Integer codigoItemPedido);
+//	ItemPedido getItemPedidoByCodigoItemPedido(Integer codigoItemPedido);
 	List<ItemPedido> findByCodigoProduto(Integer codigoProduto);
 	List<ItemPedido> findByCodigoPedido(Integer codigoPedido);
 //	ItemPedido updateItemPedido(ItemPedido itemPedido);

@@ -23,34 +23,26 @@ public class ItemPedidoService implements IItemPedidoService {
 		itemPedidoRepository.findAll().forEach(itemPedido -> listaItemPedidos.add(itemPedido));
 		return listaItemPedidos;
 	}
-//	@Override
-//	public ItemPedido getItemPedidoByItemPedidoPK(ItemPedidoPK itemPedidoPK) {
-//		return itemPedidoRepository.findByItemPedidoPK(itemPedidoPK);
-//	}
 
 	@Override
 	public ItemPedido getItemPedidoByCodigoItemPedido(Integer codigoItemPedido) {
-		return itemPedidoRepository.findByCodigoItemPedido(codigoItemPedido);
+		return itemPedidoRepository.findByItemPedidoPK_codigoItemPedidoPK(codigoItemPedido);
 	}
 
 	@Override
 	public List<ItemPedido> findByCodigoProduto(Integer codigoProduto) {
-		return itemPedidoRepository.findByCodigoProduto(codigoProduto);
+		return itemPedidoRepository.findByItemPedidoPK_codigoProdutoPK(codigoProduto);
 	}
 	
 	@Override
 	public List<ItemPedido> findByCodigoPedido(Integer codigoPedido) {
-		return itemPedidoRepository.findByCodigoPedido(codigoPedido);
+		return itemPedidoRepository.findByItemPedidoPK_codigoPedidoPK(codigoPedido);
 	}
 	
-//	
 //	@Override
 //	public ItemPedido addItemPedido(ItemPedido itemPedido) {
 //		return itemPedidoRepository.save(itemPedido);
 //	}
-//	
-//	  @Override public ItemPedido getItemPedidoByPedido(Pedido pedido) { return
-//	  itemPedidoRepository.findByPedido(pedido); }
 
 //	@Override
 //	public ItemPedido updateItemPedido(ItemPedido itemPedido) {
