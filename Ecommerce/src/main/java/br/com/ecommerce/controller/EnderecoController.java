@@ -26,13 +26,13 @@ public class EnderecoController {
 	@Autowired
 	private IEnderecoService enderecoService;
 
-	@GetMapping("enderecos")
+	@GetMapping("enderecos/all")
 	public ResponseEntity<List<Endereco>> getAllProdutos() {
 		List<Endereco> listaProdutos = enderecoService.getAllEnderecos();
 		return new ResponseEntity<List<Endereco>>(listaProdutos, HttpStatus.OK);
 	}
 
-	@GetMapping("enderecosBy/{codigoCliente}")
+	@GetMapping("enderecos/{codigoCliente}")
 	public ResponseEntity<List<Endereco>> getEnderecoByCodigo(@PathVariable("codigoCliente") Integer codigo) {
 		List<Endereco> enderecos = enderecoService.findByCliente(codigo);
 		return new ResponseEntity<List<Endereco>>(enderecos, HttpStatus.OK);
@@ -47,13 +47,13 @@ public class EnderecoController {
 	}
 
 	@PutMapping("endereco")
-	public ResponseEntity<Endereco> updateProduto(@RequestBody Endereco end) {
-		enderecoService.updateEndereco(end);
-		return new ResponseEntity<Endereco>(end, HttpStatus.OK);
+	public ResponseEntity<Endereco> updateEndereco(@RequestBody Endereco newEnd) {
+		enderecoService.updateEndereco(newEnd);
+		return new ResponseEntity<Endereco>(newEnd, HttpStatus.OK);
 	}
 
-	@DeleteMapping("endereco/{codigo}")
-	public ResponseEntity<Void> deleteProduto(@PathVariable("codigo") Long idEndereco) {
+	@DeleteMapping("endereco/{idEndereco}")
+	public ResponseEntity<Void> deleteEndereco(@PathVariable("idEndereco") Long idEndereco) {
 		enderecoService.deleteEndereco(idEndereco);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}

@@ -50,7 +50,7 @@ public class EnderecoService implements IEnderecoService {
 	
     @Transactional
 	public void deleteEndereco(Long idEndereco) {
-		enderecoRepository.delete(enderecoRepository.findByIdEndereco(idEndereco));
+		enderecoRepository.deleteByIdEndereco(idEndereco);
 	}
 
 }
