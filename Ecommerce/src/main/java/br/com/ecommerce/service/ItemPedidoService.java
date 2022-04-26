@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.ecommerce.model.ItemPedido;
 import br.com.ecommerce.repository.ItemPedidoRepository;
@@ -17,6 +18,7 @@ public class ItemPedidoService implements IItemPedidoService {
 
 //	@Override
 //	@Cacheable(value = "allItemPedidosCache", unless = "#result.size() == 0")
+	@Transactional(readOnly = true)
 	public List<ItemPedido> getAllItemPedidos() {
 		System.out.println("Listando todos os produtos");
 		List<ItemPedido> listaItemPedidos = new ArrayList<>();
@@ -25,33 +27,39 @@ public class ItemPedidoService implements IItemPedidoService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public ItemPedido getItemPedidoByCodigoItemPedido(Integer codigoItemPedido) {
 		return itemPedidoRepository.findByItemPedidoPK_codigoItemPedidoPK(codigoItemPedido);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<ItemPedido> findByCodigoProduto(Integer codigoProduto) {
 		return itemPedidoRepository.findByItemPedidoPK_codigoProdutoPK(codigoProduto);
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
 	public List<ItemPedido> findByCodigoPedido(Integer codigoPedido) {
 		return itemPedidoRepository.findByItemPedidoPK_codigoPedidoPK(codigoPedido);
 	}
-	
-//	@Override
-//	public ItemPedido addItemPedido(ItemPedido itemPedido) {
-//		return itemPedidoRepository.save(itemPedido);
-//	}
 
-//	@Override
-//	public ItemPedido updateItemPedido(ItemPedido itemPedido) {
-//		return itemPedidoRepository.save(itemPedido);
-//	}
-//
-//	@Override
-//	public void deleteItemPedido(ItemPedidoPK itemPedidoPK) {
-//		itemPedidoRepository.delete(itemPedidoRepository.findByItemPedidoPK(itemPedidoPK));
-//	}
+	@Override
+	@Transactional
+	public void deleteByCodigo(Integer codigoItemPedido) {
+		itemPedidoRepository.deleteByCodigoItemPedidoPK(codigoItemPedido);
+	}
+	
+	@Override
+	@Transactional
+	public ItemPedido addItemPedido(ItemPedido itemPedido) {
+		return itemPedidoRepository.save(itemPedido);
+	}
+
+	@Override
+	@Transactional
+	public ItemPedido updateItemPedido(ItemPedido itemPedido) {
+		return itemPedidoRepository.save(itemPedido);
+	}
 
 }

@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ITEM_PEDIDO")
+@Table(name="item_pedido")
 public class ItemPedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -98,4 +98,13 @@ public class ItemPedido implements Serializable {
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}	
+	
+	@Override
+	public String toString() {
+	return "\nItemPedido (codigo: " + codigoItemPedido + 
+			", Produto: " + this.getProduto().getNome() +
+			", Pedido: " + this.getPedido().getCodigo() +
+			", Quantidade: " + this.getQuantidade() + 
+			", Valor: " + this.getValor() + ")";
+	}
 }
