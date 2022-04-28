@@ -14,12 +14,13 @@ public interface EnderecoRepository extends CrudRepository<Endereco, Long>{
 
 	List<Endereco> findByLogradouro(String logradouro);
 	
-	@Query("SELECT e FROM Endereco e WHERE e.enderecoPK.cliente.codigo = :idCliente ")
+	@Query("SELECT e FROM Endereco e WHERE e.cliente.codigo = :idCliente ")
 	List<Endereco> findByCliente(@Param("idCliente") Integer idCliente);
-	@Query("SELECT e FROM Endereco e WHERE e.enderecoPK.idEndereco = :idEndereco")
+	
+	@Query("SELECT e FROM Endereco e WHERE e.idEndereco = :idEndereco")
 	Endereco findByIdEndereco(@Param("idEndereco") Long idEndereco);
 	
 	@Modifying
-	@Query("DELETE FROM Endereco e WHERE e.enderecoPK.idEndereco = :idEndereco")
+	@Query("DELETE FROM Endereco e WHERE e.idEndereco = :idEndereco")
 	void deleteByIdEndereco(@Param("idEndereco") Long idEndereco);
 }

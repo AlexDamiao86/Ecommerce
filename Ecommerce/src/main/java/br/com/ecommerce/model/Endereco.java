@@ -5,20 +5,34 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Endereco")
+@IdClass(EnderecoID.class)
 public class Endereco implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private EnderecoPK enderecoPK;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_END")
+	@SequenceGenerator(name="SEQ_END", sequenceName = "Endereco_seq", allocationSize=1)
+	private Long idEndereco;
+	
+	@Id
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "cod_cliente_pk_fk", referencedColumnName = "codigo")
+    private Cliente cliente;
 	
 	private TipoEndereco tipo;
 	@Column(nullable = false, length = 100)
@@ -43,19 +57,6 @@ public class Endereco implements Serializable{
     	
     }
     
-    public Endereco(EnderecoPK end,String logradouro, int numeroLogradouro, String complemento, 
-    		String bairro, String cidade,UF uf, String cep, EstadoEndereco estado, TipoEndereco tipo) {
-    	this.setEnderecoPK(end);
-		this.setLogradouro(logradouro);
-		this.setNumeroLogradouro(numeroLogradouro);
-		this.setComplemento(complemento);
-		this.setBairro(bairro);
-		this.setCidade(cidade);
-		this.setUf(uf);
-		this.setCep(cep);
-		this.setEstadoEndereco(estado);
-		this.setTipo(tipo);
-	}
     
     public Endereco(String logradouro, int numeroLogradouro, String complemento, 
     		String bairro, String cidade,UF uf, String cep, EstadoEndereco estado) {
@@ -91,14 +92,6 @@ public class Endereco implements Serializable{
 
 	public void setNumeroLogradouro(int numeroLogradouro) {
 		this.numeroLogradouro = numeroLogradouro;
-	}
-
-	public EnderecoPK getEnderecoPK() {
-		return enderecoPK;
-	}
-
-	public void setEnderecoPK(EnderecoPK enderecoPK) {
-		this.enderecoPK = enderecoPK;
 	}
 
 	public String getComplemento() {
@@ -155,5 +148,17 @@ public class Endereco implements Serializable{
 
 	public void setPedidos(Set<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public Long getIdEndereco() {
+		return idEndereco;
+	}
+
+	public void setIdEndereco(Long idEndereco) {
+		this.idEndereco = idEndereco;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 }

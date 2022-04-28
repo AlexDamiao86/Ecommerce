@@ -42,7 +42,7 @@ public class EnderecoController {
 	public ResponseEntity<Void> addEndereco(@RequestBody Endereco endereco, UriComponentsBuilder builder) {
 		Endereco end = enderecoService.addEndereco(endereco);
 		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(builder.path("/endereco/" + end.getEnderecoPK().getIdEndereco()).buildAndExpand().toUri());
+		headers.setLocation(builder.path("/endereco/" + end.getIdEndereco()).buildAndExpand().toUri());
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
