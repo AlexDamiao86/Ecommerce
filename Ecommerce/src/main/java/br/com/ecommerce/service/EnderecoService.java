@@ -1,7 +1,9 @@
 package br.com.ecommerce.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,7 +42,14 @@ public class EnderecoService implements IEnderecoService {
 
 	@Transactional(readOnly = true)
 	public List<Endereco> findByCliente(Integer idCliente) {
-		return enderecoRepository.findByCliente(idCliente);
+		List<Endereco> listaEndereco = new ArrayList<Endereco>();
+		listaEndereco = enderecoRepository.findByCliente(idCliente);
+		if(listaEndereco.size() != 0) {
+			return  listaEndereco;
+		}
+		else {
+			throw new NoSuchElementException("Não Encontrado endereco para o cliente");
+		}
 	}
 	
 	@Transactional

@@ -3,14 +3,10 @@ package br.com.ecommerce.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,19 +17,15 @@ public class ItemPedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	//Error ID Class @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "SEQITEMPED")
-	private Integer codigoItemPedido;
-	
 	@EmbeddedId
 	private ItemPedidoPK itemPedidoPK;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "cod_produto_fk",referencedColumnName = "codigo")
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "cod_produto_fk",referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Produto produto;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "cod_pedido_fk", referencedColumnName = "codigo")
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "cod_pedido_fk", referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Pedido pedido;
 	
 	@Column(nullable = false)
@@ -44,43 +36,55 @@ public class ItemPedido implements Serializable {
 
 	// Construtores
 	public ItemPedido() {};
-	public ItemPedido(Produto produto, Pedido pedido, Integer quantidade, BigDecimal valor) {
-		super();
-		this.produto = produto;
-		this.pedido = pedido;
-		this.quantidade = quantidade;
-		this.valor = valor;
+	public ItemPedido(Produto produto, Pedido pedido, Integer quantidade) {
 		this.itemPedidoPK = new ItemPedidoPK(pedido.getCodigo(), produto.getCodigo());
+		setProduto(produto);
+		this.valor = produto.getPreco();
+		setQuantidade(quantidade);
+		setPedido(pedido);
 	}
 	
-	
-	public Integer getCodigoItemPedido() {
-		return codigoItemPedido;
+	// Getters and Setters
+	public ItemPedidoPK getItemPedidoPK() {
+		return itemPedidoPK;
 	}
-	
+
 	public Produto getProduto() {
 		return produto;
 	}
 	public void setProduto(Produto produtos) {
 		this.produto = produtos;
+		this.produto.getItemPedidos().add(this);
 	}
 	public Pedido getPedido() {
 		return pedido;
 	}
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
+		this.pedido.getItemPedido().add(this);
 	}
 	public int getQuantidade() {
 		return quantidade;
 	}
 	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
+		int disponivel = this.produto.getQuantidade_estoque();
+		
+		if (disponivel < 1) {
+			System.out.println("*** NÃO HÁ ESTOQUE DISPONÍVEL PARA ESTE PRODUTO ***");
+			this.quantidade = 0;
+		} else if (quantidade <= disponivel) {
+			this.quantidade = quantidade;
+			this.produto.setQuantidade_estoque(disponivel - quantidade);
+		} else {
+			this.quantidade = disponivel;
+			this.produto.setQuantidade_estoque(0);
+		}
+		
 	}
 	public BigDecimal getValor() {
 		return valor;
 	}
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
-	}
-	
+	}	
 }

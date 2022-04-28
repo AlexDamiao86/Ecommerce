@@ -2,18 +2,19 @@ package br.com.ecommerce.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.ecommerce.model.Produto;
 import br.com.ecommerce.repository.ProdutoRepository;
 
-@Component
+@Service
 public class ProdutoService implements IProdutoService {
 
 	@Autowired
@@ -53,15 +54,20 @@ public class ProdutoService implements IProdutoService {
 			@CacheEvict(value = "allProdutosCache", allEntries = true) })	
 	public Produto updateProduto(Produto produto) {
 		System.out.println("updateProduto()");
-		return produtoRepository.save(produto);
+		if (produtoRepository.existsById(produto.codigo)) {
+			return produtoRepository.save(produto);
+		} else {
+			throw new NoSuchElementException("Produto nao encontrado");
+		}
 	}
 
 	@Override
 	@Caching(
 		evict = { 
-			@CacheEvict(value = "produtoCache", key = "#produto.codigo"), 
-			@CacheEvict(value = "allProdutosCache", allEntries = true) 
-		})		
+			@CacheEvict(value = "allProdutosCache", allEntries = true), 
+			@CacheEvict(value = "produtoCache", key = "#codigo")
+		}
+	)
 	public void deleteProduto(Integer codigo) {
 		System.out.println("deleteProduto()");
 		produtoRepository.delete(produtoRepository.findById(codigo).get());
