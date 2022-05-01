@@ -37,11 +37,6 @@ public class PedidoService implements IPedidoService{
 		return pedidoRepository.findById(codigo).get();
 	}
 
-	public List<Pedido> getPedidoByCliente(Cliente cliente) {
-		System.out.println("getPedidoByNome()");
-		return pedidoRepository.findByCliente(cliente);
-	}
-
 	@Override
 	@Caching(put = { @CachePut(value = "pedidoCache", key = "#pedido.codigo") }, evict = {
 			@CacheEvict(value = "allPedidosCache", allEntries = true) })
@@ -59,13 +54,18 @@ public class PedidoService implements IPedidoService{
 	}
 
 	@Override
-	@Caching(put = { @CachePut(value = "pedidoCache", key = "#pedido.codigo") }, evict = {
-			@CacheEvict(value = "allPedidosCache", allEntries = true) })	
-	public Pedido deletePedido(Integer codigo) {
+	@Caching(
+		evict = { 
+			@CacheEvict(value = "allPedidosCache", allEntries = true), 
+			@CacheEvict(value = "pedidoCache", key = "#codigo")
+		}
+	)
+	public void deletePedido(Integer codigo) {
 		System.out.println("deletePedido()");
-		Pedido pedido = pedidoRepository.findByCodigo(codigo);
+		Pedido pedido = pedidoRepository.findById(codigo).get();
 		pedido.setEstado(EstadoPedido.CANCELADO);
-		return pedidoRepository.save(pedido);
+		pedidoRepository.save(pedido);
 	}
 
 }
+

@@ -6,11 +6,14 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="item_pedido")
@@ -29,6 +32,7 @@ public class ItemPedido implements Serializable {
 	@JoinColumn(name = "codigoProduto",referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Produto produto;
 	
+	@JsonIgnore
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "codigoPedido", referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Pedido pedido;
