@@ -1,5 +1,6 @@
 package br.com.ecommerce.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.ecommerce.model.Cliente;
 import br.com.ecommerce.model.Pedido;
 import br.com.ecommerce.service.IPedidoService;
 
+@RestController
+@RequestMapping("ecommerce")
 public class PedidoController {
 	
 	@Autowired
@@ -26,7 +31,12 @@ public class PedidoController {
 	
 	@GetMapping("pedidos")
 	public ResponseEntity<List<Pedido>> getAllPedidos() {
-		List<Pedido> listaPedidos = pedidoService.getAllPedidos();
+		List<Pedido> listaPedidos = new ArrayList<Pedido>();
+		listaPedidos = pedidoService.getAllPedidos();
+	//	listaPedidos.forEach(pedido -> pedido.setCliente(getClienteByCodigo(pedido.getCodigo())));
+		listaPedidos.forEach(pedido -> System.out.println("pedido " + pedido.getCodigo() + "valor " + pedido.getValor_total() + "data " + pedido.getData_pedido()));
+		listaPedidos.forEach(pedido -> System.out.println(pedido.getCodigo() +" " + pedido.getCliente()));
+		System.out.println("Pedido controller");
 		return new ResponseEntity<List<Pedido>>(listaPedidos, HttpStatus.OK);
 	}
 	

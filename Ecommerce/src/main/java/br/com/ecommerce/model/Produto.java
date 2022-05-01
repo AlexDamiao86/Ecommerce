@@ -51,12 +51,16 @@ public class Produto implements Serializable {
 	public Integer getCodigo() {
 		return this.codigo;
 	}
-	public Set<ItemPedido> getItemPedidos() {
-		return itemPedidos;
-	}
-
-	public void setItemPedidos(Set<ItemPedido> itemPedidos) {
-		this.itemPedidos = itemPedidos;
+//	public Set<ItemPedido> getItemPedidos() {
+//		return itemPedidos;
+//	}
+//
+//	public void setItemPedidos(Set<ItemPedido> itemPedidos) {
+//		this.itemPedidos = itemPedidos;
+//	}
+	
+	public void vinculaItemPedido(ItemPedido itemPedido) {
+		this.itemPedidos.add(itemPedido);
 	}
 
 	public String getNome() {
