@@ -15,6 +15,8 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="Endereco")
 public class Endereco implements Serializable{
@@ -44,6 +46,7 @@ public class Endereco implements Serializable{
     @JoinColumn(name = "codCliente", referencedColumnName = "codigo", insertable = false, updatable = false)
     private Cliente cliente;
     
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "endereco_entrega")
     private Set<Pedido> pedidos = new HashSet<>();
     
@@ -152,13 +155,13 @@ public class Endereco implements Serializable{
 		this.cliente = cliente;
 	}
 
-//	public Set<Pedido> getPedidos() {
-//		return pedidos;
-//	}
-//
-//	public void setPedidos(Set<Pedido> pedidos) {
-//		this.pedidos = pedidos;
-//	}
+	public Set<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(Set<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 	
 	
 	
