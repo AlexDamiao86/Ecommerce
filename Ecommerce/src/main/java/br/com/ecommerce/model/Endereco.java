@@ -3,7 +3,6 @@ package br.com.ecommerce.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,12 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Endereco")
@@ -53,35 +50,12 @@ public class Endereco implements Serializable{
 	private String cep;
     private EstadoEndereco estadoEndereco; 
     
-<<<<<<< HEAD
-    @OneToMany(cascade=CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "endereco_entrega")
-=======
-    @MapsId("codCliente")
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "codCliente", referencedColumnName = "codigo", insertable = false, updatable = false)
-    private Cliente cliente;
-    
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "endereco_entrega")
->>>>>>> refs/remotes/origin/teste
     private Set<Pedido> pedidos = new HashSet<>();
-<<<<<<< HEAD
+
+
 	
-    public Endereco() {
-    	
-    }
     
-    
-    public Endereco(String logradouro, int numeroLogradouro, String complemento, 
-    		String bairro, String cidade,UF uf, String cep, EstadoEndereco estado) {
-		this.setLogradouro(logradouro);
-		this.setNumeroLogradouro(numeroLogradouro);
-		this.setComplemento(complemento);
-		this.setBairro(bairro);
-		this.setCidade(cidade);
-		this.setUf(uf);
-		this.setCep(cep);
-		this.setEstadoEndereco(estado);
-=======
     
     public Endereco() {
 		super();
@@ -98,20 +72,9 @@ public class Endereco implements Serializable{
 		this.cep = cep;
 		this.estadoEndereco = estado;
 		setCliente(cliente);
->>>>>>> refs/remotes/origin/teste
 	}
 
-<<<<<<< HEAD
-=======
-	public EnderecoFK getEnderecoFK() {
-		return enderecoFK;
-	}
 
-	public void setEnderecoFK(EnderecoFK enderecoFK) {
-		this.enderecoFK = enderecoFK;
-	}
-
->>>>>>> refs/remotes/origin/teste
 	public TipoEndereco getTipo() {
 		return tipo;
 	}
@@ -184,7 +147,6 @@ public class Endereco implements Serializable{
 		this.estadoEndereco = estadoEndereco;
 	}
 
-<<<<<<< HEAD
 	public Set<Pedido> getPedidos() {
 		return pedidos;
 	}
@@ -205,24 +167,4 @@ public class Endereco implements Serializable{
 		this.cliente = cliente;
 	}
 
-=======
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-//	public Set<Pedido> getPedidos() {
-//		return pedidos;
-//	}
-//
-//	public void setPedidos(Set<Pedido> pedidos) {
-//		this.pedidos = pedidos;
-//	}
-	
-	
-	
->>>>>>> refs/remotes/origin/teste
 }

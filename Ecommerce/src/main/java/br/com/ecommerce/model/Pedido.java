@@ -44,11 +44,7 @@ public class Pedido implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumns({
 	@JoinColumn(name = "sequencial_endereco_entrega", referencedColumnName = "idEndereco"),
-<<<<<<< HEAD
 	@JoinColumn(name = "codigo_cliente", referencedColumnName = "cod_cliente_pk_fk")
-=======
-	@JoinColumn(name = "codigo_cliente", referencedColumnName = "codCliente")
->>>>>>> refs/remotes/origin/teste
 	})
 	private Endereco endereco_entrega;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "pedido")

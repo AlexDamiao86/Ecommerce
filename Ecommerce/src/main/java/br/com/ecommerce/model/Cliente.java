@@ -42,19 +42,12 @@ public class Cliente implements Serializable {
 	public Date dataNascimento; 
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cliente")
-<<<<<<< HEAD
-	private Set<Endereco> enderecos = new LinkedHashSet<Endereco>();
-=======
 	private Set<Endereco> enderecos = new LinkedHashSet<Endereco>();	
->>>>>>> refs/remotes/origin/teste
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cliente")
 	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
 	
-<<<<<<< HEAD
-=======
 		
->>>>>>> refs/remotes/origin/teste
 	public Cliente() {
 		super();
 	}
@@ -135,25 +128,6 @@ public class Cliente implements Serializable {
 //		this.enderecos = enderecos;
 //	}
 
-<<<<<<< HEAD
-//	public void setEnderecos(Set<Endereco> enderecos) {
-//		this.enderecos = enderecos;
-//	}
-
-//	public Set<Pedido> getPedidos() {
-//		return pedidos;
-//	}
-//	public void setPedidos(Set<Pedido> pedidos) {
-//		this.pedidos = pedidos;
-//	}	
-//	public Set<Pedido> getPedidos() {
-//		return pedidos;
-//	}
-//	public void setPedidos(Set<Pedido> pedidos) {
-//		this.pedidos = pedidos;
-//	}	
-=======
->>>>>>> refs/remotes/origin/teste
 //	public Set<Pedido> getPedidos() {
 //		return pedidos;
 //	}
