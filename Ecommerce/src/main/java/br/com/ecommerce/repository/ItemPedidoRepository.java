@@ -12,14 +12,11 @@ import br.com.ecommerce.model.ItemPedido;
 
 @Repository
 public interface ItemPedidoRepository extends CrudRepository<ItemPedido, Integer>{
-	
-	public ItemPedido findByItemPedidoPK_codigoItemPedidoPK(@Param("codigoItemPedido") Integer codigoItemPedido);
 
-	public List<ItemPedido> findByItemPedidoPK_codigoProdutoPK(@Param("codigoProduto") Integer codigoProduto);
-
-	public List<ItemPedido> findByItemPedidoPK_codigoPedidoPK(@Param("codigoPedido") Integer codigoPedido);
-	
+	public ItemPedido findByCodigoItemPedidoPK (@Param("codigoItemPedidoPK") Integer codigoItemPedidoPK);
+	public List<ItemPedido> findByPedido_codigo(@Param("codigoPedidoPK") Integer codigoPedidoPK);
+	public List<ItemPedido> findByProduto_codigo(@Param("codigoProdutoPK") Integer codigoProdutoPK);
 	@Modifying
-	@Query("DELETE FROM ItemPedido i WHERE i.itemPedidoPK.codigoItemPedidoPK = :codigoItemPedidoPK")
+	@Query("DELETE FROM ItemPedido i WHERE i.codigoItemPedidoPK = :codigoItemPedidoPK")
 	public void deleteByCodigoItemPedidoPK(@Param("codigoItemPedidoPK") Integer codigoItemPedidoPK);
 }

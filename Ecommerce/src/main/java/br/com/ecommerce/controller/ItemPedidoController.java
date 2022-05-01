@@ -51,7 +51,7 @@ public class ItemPedidoController {
 	@ApiOperation(value = "Retorna todos os ItemPedidos de um produto")
 	public ResponseEntity<List<ItemPedido>> findByCodigoProduto(@PathVariable("codigoProduto") Integer codigoProduto){
 		try {
-			List<ItemPedido> listaItemPedidos = itemPedidoService.findByCodigoProduto(codigoProduto);
+			List<ItemPedido> listaItemPedidos = itemPedidoService.findByCodigoProdutoPK(codigoProduto);
 			return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<List<ItemPedido>>(HttpStatus.NOT_FOUND);
@@ -63,33 +63,32 @@ public class ItemPedidoController {
 	@ApiOperation(value = "Retorna todos os ItemPedidos de um pedido")
 	public ResponseEntity<List<ItemPedido>> findByCodigoPedido(@PathVariable("codigoPedido") Integer codigoPedido){
 		try {
-			List<ItemPedido> listaItemPedidos = itemPedidoService.findByCodigoPedido(codigoPedido);
+			List<ItemPedido> listaItemPedidos = itemPedidoService.findByCodigoPedidoPK(codigoPedido);
 			return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<List<ItemPedido>>(HttpStatus.NOT_FOUND);
 		}
 	}
-
 	
 	// Select 1
 	@GetMapping("itempedido/{codigoItemPedido}")
 	@ApiOperation(value = "Retorna um ItemPedido único pelo codigo")
-	public ResponseEntity<ItemPedido> getItemPedidoByCodigoItemPedido(@PathVariable("codigoItemPedido") Integer codigoItemPedido) {
+	public ResponseEntity<ItemPedido> findByCodigoItemPedidoPK(@PathVariable("codigoItemPedido") Integer codigoItemPedidoPK) {
 		try {
-			ItemPedido itemPedido = itemPedidoService.getItemPedidoByCodigoItemPedido(codigoItemPedido);
+			ItemPedido itemPedido = itemPedidoService.findByCodigoItemPedidoPK(codigoItemPedidoPK);
 			return new ResponseEntity<ItemPedido>(itemPedido, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<ItemPedido>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	// Adiciona
+	//Adiciona um itemPedido
 	@PostMapping("itempedido")
 	public ResponseEntity<Void> addItemPedido(@RequestBody ItemPedido itemPedido, UriComponentsBuilder builder) {
 		try {
-			ItemPedido novoItemPedido = itemPedidoService.addItemPedido(itemPedido);
+			ItemPedido novoItemPedido = itemPedidoService.updateItemPedido(itemPedido);
 			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(builder.path("/itempedido/" + novoItemPedido.getItemPedidoPK().getcodigoItemPedido()).buildAndExpand().toUri());
+			headers.setLocation(builder.path("/endereco/" + novoItemPedido.getCodigoItemPedidoPK()).buildAndExpand().toUri());
 			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 		} catch (DataIntegrityViolationException | HttpMessageNotReadableException e) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -98,10 +97,10 @@ public class ItemPedidoController {
 	
 	// Update
 	@PutMapping("itempedido")
-	public ResponseEntity<ItemPedido> updateEndereco(@RequestBody ItemPedido novoItemPedido) {
+	public ResponseEntity<ItemPedido> updateitemPedido(@RequestBody ItemPedido novoItemPedido) {
 		try {
-			itemPedidoService.updateItemPedido(novoItemPedido);
-			return new ResponseEntity<ItemPedido>(novoItemPedido, HttpStatus.OK);
+			ItemPedido novoItemPedido1 =  itemPedidoService.updateItemPedido(novoItemPedido);
+			return new ResponseEntity<ItemPedido>(novoItemPedido1, HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<ItemPedido>(HttpStatus.NOT_FOUND);
 		} catch (DataIntegrityViolationException | HttpMessageNotReadableException e) {
@@ -112,9 +111,9 @@ public class ItemPedidoController {
 	// Delete
 	@DeleteMapping("itemPedido/{codigoItemPedido}")
 	@ApiOperation(value = "Deleta um vinculo itemPedido através da ID")
-	public ResponseEntity<Void> deleteById(@PathVariable("codigoItemPedido") Integer codigoItemPedido) {
+	public ResponseEntity<Void> deleteByCodigoItemPedidoPK(@PathVariable("codigoItemPedido") Integer codigoItemPedidoPK) {
 		try {
-			itemPedidoService.deleteByCodigo(codigoItemPedido);
+			itemPedidoService.deleteByCodigoItemPedidoPK(codigoItemPedidoPK);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);

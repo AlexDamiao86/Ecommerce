@@ -19,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 
 @Entity
@@ -44,6 +46,7 @@ public class Pedido implements Serializable {
 	})
 	private Endereco endereco_entrega;
 	
+	@JsonBackReference
 	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER, mappedBy = "pedido")
 	private Set<ItemPedido> itemPedido = new LinkedHashSet<ItemPedido>();
 	private EstadoPedido estado;

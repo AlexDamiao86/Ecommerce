@@ -4,37 +4,38 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name="item_pedido")
+@IdClass(ItemPedidoPK.class)
 public class ItemPedido implements Serializable {
-
+	
 	private static final long serialVersionUID = 1L;
-	
-	@EmbeddedId
-	private ItemPedidoPK itemPedidoPK;
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "Seq_IP")
 	@Column
-	private Integer codigoItemPedido;
+	private Integer codigoItemPedidoPK;
 	
+	@Id
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "codigoProduto",referencedColumnName = "codigo", insertable = false, updatable = false)
+	@JoinColumn(name = "codigoProdutoPK",referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Produto produto;
 	
-	@JsonIgnore
+	@Id
+	@JsonManagedReference
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "codigoPedido", referencedColumnName = "codigo", insertable = false, updatable = false)
+	@JoinColumn(name = "codigoPedidoPK", referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Pedido pedido;
 	
 	@Column(nullable = false)
@@ -46,9 +47,7 @@ public class ItemPedido implements Serializable {
 	// Construtores
 	public ItemPedido() {};
 	public ItemPedido(Produto produto, Pedido pedido, Integer quantidade) {
-		this.itemPedidoPK = new ItemPedidoPK(this.codigoItemPedido, pedido.getCodigo(), produto.getCodigo());
 		setProduto(produto);
-//		this.produto.vinculaItemPedido(this);
 		this.valor = produto.getPreco();
 		setQuantidade(quantidade);
 		setPedido(pedido);
@@ -56,21 +55,17 @@ public class ItemPedido implements Serializable {
 	}
 	
 	// Getters and Setters
-	public Integer getCodigoItemPedido() {
-		return codigoItemPedido;
+	public Integer getCodigoItemPedidoPK() {
+		return codigoItemPedidoPK;
 	}
 	
-	public ItemPedidoPK getItemPedidoPK() {
-		return itemPedidoPK;
-	}
-
 	public Produto getProduto() {
 		return produto;
 	}
-	public void setProduto(Produto produtos) {
-		this.produto = produtos;
-//		this.produto.getItemPedidos().add(this);
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
+	//@JsonIgnore
 	public Pedido getPedido() {
 		return pedido;
 	}
@@ -105,7 +100,7 @@ public class ItemPedido implements Serializable {
 	
 	@Override
 	public String toString() {
-	return "\nItemPedido (codigo: " + codigoItemPedido + 
+	return "\nItemPedido (codigo: " + codigoItemPedidoPK + 
 			", Produto: " + this.getProduto().getNome() +
 			", Pedido: " + this.getPedido().getCodigo() +
 			", Quantidade: " + this.getQuantidade() + 

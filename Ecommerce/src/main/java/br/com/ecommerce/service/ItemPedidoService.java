@@ -28,32 +28,26 @@ public class ItemPedidoService implements IItemPedidoService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public ItemPedido getItemPedidoByCodigoItemPedido(Integer codigoItemPedido) {
-		return itemPedidoRepository.findByItemPedidoPK_codigoItemPedidoPK(codigoItemPedido);
+	public ItemPedido findByCodigoItemPedidoPK(Integer codigoItemPedidoPK) {
+		return itemPedidoRepository.findByCodigoItemPedidoPK(codigoItemPedidoPK);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ItemPedido> findByCodigoProduto(Integer codigoProduto) {
-		return itemPedidoRepository.findByItemPedidoPK_codigoProdutoPK(codigoProduto);
+	public List<ItemPedido> findByCodigoProdutoPK(Integer codigoProduto) {
+		return itemPedidoRepository.findByProduto_codigo(codigoProduto);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<ItemPedido> findByCodigoPedido(Integer codigoPedido) {
-		return itemPedidoRepository.findByItemPedidoPK_codigoPedidoPK(codigoPedido);
+	public List<ItemPedido> findByCodigoPedidoPK(Integer codigoPedido) {
+		return itemPedidoRepository.findByPedido_codigo(codigoPedido);
 	}
 
 	@Override
 	@Transactional
-	public void deleteByCodigo(Integer codigoItemPedido) {
-		itemPedidoRepository.deleteByCodigoItemPedidoPK(codigoItemPedido);
-	}
-	
-	@Override
-	@Transactional
-	public ItemPedido addItemPedido(ItemPedido itemPedido) {
-		return itemPedidoRepository.save(itemPedido);
+	public void deleteByCodigoItemPedidoPK(Integer codigoItemPedidoPK) {
+		itemPedidoRepository.deleteByCodigoItemPedidoPK(codigoItemPedidoPK);
 	}
 
 	@Override

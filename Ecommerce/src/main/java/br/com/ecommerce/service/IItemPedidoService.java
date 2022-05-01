@@ -7,10 +7,9 @@ import br.com.ecommerce.model.ItemPedido;
 public interface IItemPedidoService {
 
 	List<ItemPedido> getAllItemPedidos();
-	ItemPedido addItemPedido(ItemPedido itemPedido);
-	ItemPedido getItemPedidoByCodigoItemPedido(Integer codigoItemPedido);
-	List<ItemPedido> findByCodigoProduto(Integer codigoProduto);
-	List<ItemPedido> findByCodigoPedido(Integer codigoPedido);
+	ItemPedido findByCodigoItemPedidoPK(Integer codigoItemPedidoPK);
+	List<ItemPedido> findByCodigoProdutoPK(Integer codigoProduto);
+	List<ItemPedido> findByCodigoPedidoPK(Integer codigoPedido);
 	ItemPedido updateItemPedido(ItemPedido itemPedido);
-	void deleteByCodigo(Integer codigoItemPedido);
+	void deleteByCodigoItemPedidoPK(Integer codigoItemPedidoPK);
 }
