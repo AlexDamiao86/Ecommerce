@@ -25,7 +25,7 @@ public class EnderecoService implements IEnderecoService {
 	
 	@Transactional(readOnly = true)
 	public List<Endereco> getAllEnderecos() {
-		return (List<Endereco>) enderecoRepository.findAll();
+		return (List<Endereco>)enderecoRepository.findAll();
 	}
 	
 	@Transactional

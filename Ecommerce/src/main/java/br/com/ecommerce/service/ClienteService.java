@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import br.com.ecommerce.model.Cliente;
+import br.com.ecommerce.model.Endereco;
 import br.com.ecommerce.repository.ClienteRepository;
 
 
@@ -52,6 +53,11 @@ public class ClienteService implements IClienteService {
 	public Cliente updateCliente(Cliente cliente) {
 		System.out.println("updateCliente()");		
 		return clienteRepository.save(cliente);
+	}
+	
+	@Override
+	public List<Cliente> getAllClientes() {
+		return (List<Cliente>) clienteRepository.findAll();
 	}
 
 } 

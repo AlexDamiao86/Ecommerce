@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import br.com.ecommerce.dto.EnderecoDTO;
+
 
 @Entity
 @Table(name="Endereco")
@@ -51,11 +53,7 @@ public class Endereco implements Serializable{
     private EstadoEndereco estadoEndereco; 
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "endereco_entrega")
-    private Set<Pedido> pedidos = new HashSet<>();
-
-
-	
-    
+    private Set<Pedido> pedidos = new HashSet<>();    
     
     public Endereco() {
 		super();
@@ -167,4 +165,11 @@ public class Endereco implements Serializable{
 		this.cliente = cliente;
 	}
 
+	public Cliente getCliente() {
+		return this.cliente; 
+	}
+	
+	public EnderecoDTO toDTO() {
+		return new EnderecoDTO(this);
+	}
 }

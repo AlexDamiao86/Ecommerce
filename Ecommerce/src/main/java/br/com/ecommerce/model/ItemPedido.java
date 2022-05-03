@@ -23,8 +23,7 @@ public class ItemPedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "Seq_IP")
-	@Column
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Seq_IP")
 	private Integer codigoItemPedidoPK;
 	
 	@Id
@@ -33,7 +32,8 @@ public class ItemPedido implements Serializable {
 	private Produto produto;
 	
 	@Id
-	@JsonManagedReference
+	//TODO Me Ferrou
+	//@JsonManagedReference
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "codigoPedidoPK", referencedColumnName = "codigo", insertable = false, updatable = false)
 	private Pedido pedido;

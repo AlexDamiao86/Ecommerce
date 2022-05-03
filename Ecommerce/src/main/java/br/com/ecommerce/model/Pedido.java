@@ -21,6 +21,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import br.com.ecommerce.dto.PedidoDTO;
+
 
 
 @Entity
@@ -103,6 +105,7 @@ public class Pedido implements Serializable {
 	}
 
 	public void setEndereco_entrega(Endereco endereco_entrega) {
+	//	System.out.println("Endereco Entrega: \n IdEndereco: " + endereco_entrega.getIdEndereco().longValue() + " \n cod_fk_cliente: " + endereco_entrega.getCliente());
 		this.endereco_entrega = endereco_entrega;
 	}
 
@@ -126,6 +129,9 @@ public class Pedido implements Serializable {
 //	}
 	public Set<ItemPedido> getItemPedido() {
 		return itemPedido;
+	}
+	public PedidoDTO toDTO() {
+		return new PedidoDTO(this);
 	}
 }
 

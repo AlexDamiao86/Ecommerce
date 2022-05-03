@@ -19,6 +19,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import br.com.ecommerce.dto.ClienteDTO;
 
 @Entity	
 @Table(name = "cliente")
@@ -43,11 +46,10 @@ public class Cliente implements Serializable {
 	@Column(nullable = false)
 	public Date dataNascimento; 
 	
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cliente")
 	private Set<Endereco> enderecos = new LinkedHashSet<Endereco>();	
 	
-	@JsonIgnore
+	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cliente")
 	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
 	
@@ -137,6 +139,10 @@ public class Cliente implements Serializable {
 	}
 	public void setPedidos(Set<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public ClienteDTO toDTO() {
+		return new ClienteDTO(this);
 	}	
 
 }
