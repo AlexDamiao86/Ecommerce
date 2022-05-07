@@ -31,18 +31,18 @@ public class ItemPedidoService implements IItemPedidoService {
 	public ItemPedido findByCodigoItemPedidoPK(Integer codigoItemPedidoPK) {
 		return itemPedidoRepository.findByCodigoItemPedidoPK(codigoItemPedidoPK);
 	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<ItemPedido> findByCodigoProdutoPK(Integer codigoProduto) {
-		return itemPedidoRepository.findByProduto_codigo(codigoProduto);
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public List<ItemPedido> findByCodigoPedidoPK(Integer codigoPedido) {
-		return itemPedidoRepository.findByPedido_codigo(codigoPedido);
-	}
+//
+//	@Override
+//	@Transactional(readOnly = true)
+//	public List<ItemPedido> findByCodigoProdutoPK(Integer codigoProduto) {
+//		return itemPedidoRepository.findByProduto_codigo(codigoProduto);
+//	}
+//	
+//	@Override
+//	@Transactional(readOnly = true)
+//	public List<ItemPedido> findByCodigoPedidoPK(Integer codigoPedido) {
+//		return itemPedidoRepository.findByPedido_codigo(codigoPedido);
+//	}
 
 	@Override
 	@Transactional

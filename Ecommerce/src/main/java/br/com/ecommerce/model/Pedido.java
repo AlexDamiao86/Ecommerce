@@ -14,16 +14,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import br.com.ecommerce.dto.PedidoDTO;
-
-
 
 @Entity
 @Table(name = "pedidos")
@@ -37,20 +31,18 @@ public class Pedido implements Serializable {
 	private Date data_pedido;
 	private BigDecimal valor_total;
 	
-	@ManyToOne
-	@JoinColumn(name = "codigo_cliente", referencedColumnName = "codigo", insertable = false, updatable = false)
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER)
+	@JoinColumn(name = "codigoPedido_FK")
+	private Set<ItemPedido> itemPedidos = new LinkedHashSet<ItemPedido>();
+	
+	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+	@JoinColumn(name = "IdEndereco_FK")
+	private Endereco enderecoEntrega;
+	
+	@ManyToOne(optional=false)
+	@JoinColumn(name = "codigo_cliente_FK",referencedColumnName = "codigo", nullable=false)
 	private Cliente cliente;
 	
-	@ManyToOne
-	@JoinColumns({
-	@JoinColumn(name = "sequencial_endereco_entrega", referencedColumnName = "idEndereco"),
-	@JoinColumn(name = "codigo_cliente", referencedColumnName = "cod_cliente_pk_fk")
-	})
-	private Endereco endereco_entrega;
-	
-	@JsonBackReference
-	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER, mappedBy = "pedido")
-	private Set<ItemPedido> itemPedido = new LinkedHashSet<ItemPedido>();
 	private EstadoPedido estado;
 	
 	public Pedido() {
@@ -60,10 +52,7 @@ public class Pedido implements Serializable {
 		super();
 		this.codigo = codigo;
 		this.data_pedido = data_pedido;
-		setCliente(cliente);
-		setEndereco_entrega(endereco_entrega);
-		this.itemPedido = itemPedido;
-//		itemPedido.forEach(item -> setItemPedido(item));
+		this.setItemPedidos(itemPedido);
 		itemPedido.forEach(item -> adicionarItem(item));
 		this.estado = estado;
 	}
@@ -92,23 +81,6 @@ public class Pedido implements Serializable {
 		this.valor_total = valor_total;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Endereco getEndereco_entrega() {
-		return endereco_entrega;
-	}
-
-	public void setEndereco_entrega(Endereco endereco_entrega) {
-	//	System.out.println("Endereco Entrega: \n IdEndereco: " + endereco_entrega.getIdEndereco().longValue() + " \n cod_fk_cliente: " + endereco_entrega.getCliente());
-		this.endereco_entrega = endereco_entrega;
-	}
-
 	public EstadoPedido getEstado() {
 		return estado;
 	}
@@ -118,20 +90,31 @@ public class Pedido implements Serializable {
 	}
 	
 	public void adicionarItem(ItemPedido item) {
-	//	setItemPedido(item);
 		BigDecimal quantidade = new BigDecimal(item.getQuantidade());
 		this.valor_total = this.valor_total.add(item.getValor().multiply(quantidade));
 	}
-
-//	public void setItemPedido(ItemPedido itemPedidos) {
-//		this.itemPedido.add(itemPedidos); 
-//		itemPedidos.setPedido(this);
-//	}
-	public Set<ItemPedido> getItemPedido() {
-		return itemPedido;
+	
+	
+	public Set<ItemPedido> getItemPedidos() {
+		return itemPedidos;
 	}
-	public PedidoDTO toDTO() {
-		return new PedidoDTO(this);
+	
+	public void setItemPedidos(Set<ItemPedido> itemPedido) {
+		this.itemPedidos = itemPedido;
+	}
+	
+	public Endereco getEnderecoEntrega() {
+		return enderecoEntrega;
+	}
+	public void setEnderecoEntrega(Endereco enderecoEntrega) {
+		this.enderecoEntrega = enderecoEntrega;
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 }
 

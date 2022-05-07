@@ -1,8 +1,6 @@
 package br.com.ecommerce.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import br.com.ecommerce.dto.ClienteDTO;
-import br.com.ecommerce.dto.EnderecoDTO;
-import br.com.ecommerce.model.Cliente;
 import br.com.ecommerce.model.Endereco;
 import br.com.ecommerce.service.IEnderecoService;
 
@@ -30,47 +24,40 @@ public class EnderecoController {
 	@Autowired
 	private IEnderecoService enderecoService;
 
+//	@GetMapping("enderecos/all")
+//	public ResponseEntity<List<EnderecoDTO>> getAllEnderecos() {
+//		List<Endereco> listaEnderecos = enderecoService.getAllEnderecos();
+//		List<EnderecoDTO> ends = new ArrayList<EnderecoDTO>();
+//		for (Endereco e: listaEnderecos) {
+//			Cliente cliente = e.getCliente();
+//			if(cliente != null) {
+//				ClienteDTO cli = new ClienteDTO();
+//				cli.setNome(cliente.getNome());
+//				cli.setCodigo(cliente.getCodigo());
+//				cli.setCpf(cliente.getCpf());
+//				cli.setDataNascimento(cliente.getDataNascimento());
+//				cli.setEmail(cliente.getEmail());
+//				EnderecoDTO end = e.toDTO();
+//				end.setCliente(cli);
+//				ends.add(end);
+//			}
+//		}
+//		return new ResponseEntity<List<EnderecoDTO>>(ends, HttpStatus.OK);
+//	}
+	
 	@GetMapping("enderecos/all")
-	public ResponseEntity<List<EnderecoDTO>> getAllEnderecos() {
+	public ResponseEntity<List<Endereco>> getAllEnderecos() {
 		List<Endereco> listaEnderecos = enderecoService.getAllEnderecos();
-		List<EnderecoDTO> ends = new ArrayList<EnderecoDTO>();
-		for (Endereco e: listaEnderecos) {
-			Cliente cliente = e.getCliente();
-			if(cliente != null) {
-				ClienteDTO cli = new ClienteDTO();
-				cli.setNome(cliente.getNome());
-				cli.setCodigo(cliente.getCodigo());
-				cli.setCpf(cliente.getCpf());
-				cli.setDataNascimento(cliente.getDataNascimento());
-				cli.setEmail(cliente.getEmail());
-				EnderecoDTO end = e.toDTO();
-				end.setCliente(cli);
-				ends.add(end);
-			}
-		}
-		return new ResponseEntity<List<EnderecoDTO>>(ends, HttpStatus.OK);
+		return new ResponseEntity<List<Endereco>>(listaEnderecos, HttpStatus.OK);
 	}
 
+	
 	@GetMapping("enderecos/{codigoCliente}")
-	public ResponseEntity<List<EnderecoDTO>> getEnderecoByCodigo(@PathVariable("codigoCliente") Integer codigo) {
+	public ResponseEntity<List<Endereco>> getEnderecoByCodigo(@PathVariable("codigoCliente") Integer codigo) {
 		List<Endereco> enderecos = enderecoService.findByCliente(codigo);
-		List<EnderecoDTO> ends = new ArrayList<EnderecoDTO>();
-		for (Endereco e: enderecos) {
-			Cliente cliente = e.getCliente();
-			if(cliente != null) {
-				ClienteDTO cli = new ClienteDTO();
-				cli.setNome(cliente.getNome());
-				cli.setCodigo(cliente.getCodigo());
-				cli.setCpf(cliente.getCpf());
-				cli.setDataNascimento(cliente.getDataNascimento());
-				cli.setEmail(cliente.getEmail());
-				EnderecoDTO end = e.toDTO();
-				end.setCliente(cli);
-				ends.add(end);
-			}
-		}
-		return new ResponseEntity<List<EnderecoDTO>>(ends, HttpStatus.OK);
+		return new ResponseEntity<List<Endereco>>(enderecos, HttpStatus.OK);
 	}
+
 
 	@PostMapping("endereco")
 	public ResponseEntity<Void> addEndereco(@RequestBody Endereco endereco, UriComponentsBuilder builder) {

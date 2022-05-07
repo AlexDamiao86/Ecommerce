@@ -10,4 +10,5 @@ public class ItemPedidoPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 	Integer produto;
 	Integer pedido;
+	Integer codigoItemPedidoPK;
 }

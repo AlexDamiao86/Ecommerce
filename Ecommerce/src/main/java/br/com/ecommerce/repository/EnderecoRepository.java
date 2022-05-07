@@ -14,7 +14,7 @@ public interface EnderecoRepository extends CrudRepository<Endereco, Long>{
 
 	List<Endereco> findByLogradouro(String logradouro);
 	
-	@Query("SELECT e FROM Endereco e WHERE e.cliente.codigo = :idCliente ")
+	@Query(value="SELECT * FROM Endereco e WHERE e.codigo_cliente_fk = :idCliente", nativeQuery = true)
 	List<Endereco> findByCliente(@Param("idCliente") Integer idCliente);
 	
 	@Query("SELECT e FROM Endereco e WHERE e.idEndereco = :idEndereco")

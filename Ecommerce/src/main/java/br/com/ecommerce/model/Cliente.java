@@ -2,7 +2,6 @@ package br.com.ecommerce.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -13,15 +12,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import br.com.ecommerce.dto.ClienteDTO;
 
 @Entity	
 @Table(name = "cliente")
@@ -46,12 +41,14 @@ public class Cliente implements Serializable {
 	@Column(nullable = false)
 	public Date dataNascimento; 
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cliente")
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="codigo_cliente_fk")
 	private Set<Endereco> enderecos = new LinkedHashSet<Endereco>();	
 	
-	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "cliente")
-	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
+	//@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	//@JoinColumn(name = "codigo_cliente_fk")
+//	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
 	
 		
 	public Cliente() {
@@ -75,16 +72,16 @@ public class Cliente implements Serializable {
 	}
 	
 	
-	@Override
-	public String toString() {
-		return "\\nCliente [codigo=" + codigo + 
-			   "\\nNome=" + nome + 
-			   "\\nCPF=" + cpf + 
-			   "\\nE-mail=" + email +
-			   "\\nData de Nascimento=" + dataNascimento + 
-			   "\\nEnderecos=" + enderecos + 
-			   "\\nPedidos=" + pedidos + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "\\nCliente [codigo=" + codigo + 
+//			   "\\nNome=" + nome + 
+//			   "\\nCPF=" + cpf + 
+//			   "\\nE-mail=" + email +
+//			   "\\nData de Nascimento=" + dataNascimento + 
+//			   "\\nEnderecos=" + enderecos + 
+//			   "\\nPedidos=" + pedidos + "]";
+//	}
 
 	public Integer getCodigo() {
 		return codigo;
@@ -134,15 +131,10 @@ public class Cliente implements Serializable {
 		this.enderecos = enderecos;
 	}
 
-	public Set<Pedido> getPedidos() {
-		return pedidos;
-	}
-	public void setPedidos(Set<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-
-	public ClienteDTO toDTO() {
-		return new ClienteDTO(this);
-	}	
-
+//	public Set<Pedido> getPedidos() {
+//		return pedidos;
+//	}
+//	public void setPedidos(Set<Pedido> pedidos) {
+//		this.pedidos = pedidos;
+//	}
 }

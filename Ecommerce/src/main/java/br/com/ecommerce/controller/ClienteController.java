@@ -1,6 +1,5 @@
 package br.com.ecommerce.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import br.com.ecommerce.dto.ClienteDTO;
 import br.com.ecommerce.model.Cliente;
 import br.com.ecommerce.service.IClienteService;
 
@@ -34,13 +31,19 @@ public class ClienteController {
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
+//	@GetMapping("clientes/all")
+//	public ResponseEntity<List<ClienteDTO>> getAllEnderecos() {
+//		List<Cliente> listaClientes = clienteService.getAllClientes();
+//		List<ClienteDTO> listaCli =  new ArrayList<ClienteDTO>();
+//		for(Cliente c : listaClientes) {
+//			listaCli.add(c.toDTO());
+//		}
+//		return new ResponseEntity<List<ClienteDTO>>(listaCli, HttpStatus.OK);
+//	}
+	
 	@GetMapping("clientes/all")
-	public ResponseEntity<List<ClienteDTO>> getAllEnderecos() {
+	public ResponseEntity<List<Cliente>> getAllEnderecos() {
 		List<Cliente> listaClientes = clienteService.getAllClientes();
-		List<ClienteDTO> listaCli =  new ArrayList<ClienteDTO>();
-		for(Cliente c : listaClientes) {
-			listaCli.add(c.toDTO());
-		}
-		return new ResponseEntity<List<ClienteDTO>>(listaCli, HttpStatus.OK);
+		return new ResponseEntity<List<Cliente>>(listaClientes, HttpStatus.OK);
 	}
 }

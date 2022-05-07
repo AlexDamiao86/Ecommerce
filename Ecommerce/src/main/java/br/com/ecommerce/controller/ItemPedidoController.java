@@ -46,29 +46,29 @@ public class ItemPedidoController {
 		}
 	}
 	
-	// List Todos item-pedidos por codigo de produto
-	@GetMapping("itempedidosporproduto/{codigoProduto}")
-	@ApiOperation(value = "Retorna todos os ItemPedidos de um produto")
-	public ResponseEntity<List<ItemPedido>> findByCodigoProduto(@PathVariable("codigoProduto") Integer codigoProduto){
-		try {
-			List<ItemPedido> listaItemPedidos = itemPedidoService.findByCodigoProdutoPK(codigoProduto);
-			return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
-		} catch (NoSuchElementException e) {
-			return new ResponseEntity<List<ItemPedido>>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	// List Todos item-pedidos por codigo de pedido
-	@GetMapping("itempedidosporpedido/{codigoPedido}")
-	@ApiOperation(value = "Retorna todos os ItemPedidos de um pedido")
-	public ResponseEntity<List<ItemPedido>> findByCodigoPedido(@PathVariable("codigoPedido") Integer codigoPedido){
-		try {
-			List<ItemPedido> listaItemPedidos = itemPedidoService.findByCodigoPedidoPK(codigoPedido);
-			return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
-		} catch (NoSuchElementException e) {
-			return new ResponseEntity<List<ItemPedido>>(HttpStatus.NOT_FOUND);
-		}
-	}
+//	// List Todos item-pedidos por codigo de produto
+//	@GetMapping("itempedidosporproduto/{codigoProduto}")
+//	@ApiOperation(value = "Retorna todos os ItemPedidos de um produto")
+//	public ResponseEntity<List<ItemPedido>> findByCodigoProduto(@PathVariable("codigoProduto") Integer codigoProduto){
+//		try {
+//			List<ItemPedido> listaItemPedidos = itemPedidoService.findByCodigoProdutoPK(codigoProduto);
+//			return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
+//		} catch (NoSuchElementException e) {
+//			return new ResponseEntity<List<ItemPedido>>(HttpStatus.NOT_FOUND);
+//		}
+//	}
+//	
+//	// List Todos item-pedidos por codigo de pedido
+//	@GetMapping("itempedidosporpedido/{codigoPedido}")
+//	@ApiOperation(value = "Retorna todos os ItemPedidos de um pedido")
+//	public ResponseEntity<List<ItemPedido>> findByCodigoPedido(@PathVariable("codigoPedido") Integer codigoPedido){
+//		try {
+//			List<ItemPedido> listaItemPedidos = itemPedidoService.findByCodigoPedidoPK(codigoPedido);
+//			return new ResponseEntity<List<ItemPedido>>(listaItemPedidos, HttpStatus.OK);
+//		} catch (NoSuchElementException e) {
+//			return new ResponseEntity<List<ItemPedido>>(HttpStatus.NOT_FOUND);
+//		}
+//	}
 	
 	// Select 1
 	@GetMapping("itempedido/{codigoItemPedido}")

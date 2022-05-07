@@ -1,27 +1,18 @@
 package br.com.ecommerce.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import br.com.ecommerce.dto.EnderecoDTO;
 
 
 @Entity
 @Table(name="Endereco")
-@IdClass(EnderecoID.class)
 public class Endereco implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -30,11 +21,6 @@ public class Endereco implements Serializable{
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_END")
 	@SequenceGenerator(name="SEQ_END", sequenceName = "Endereco_seq", allocationSize=1)
 	private Long idEndereco;
-	
-	@Id
-	@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "cod_cliente_pk_fk", referencedColumnName = "codigo")
-    private Cliente cliente;
 	
 	private TipoEndereco tipo;
 	@Column(nullable = false, length = 100)
@@ -50,10 +36,7 @@ public class Endereco implements Serializable{
 	
 	@Column(nullable = false, length = 10)
 	private String cep;
-    private EstadoEndereco estadoEndereco; 
-    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "endereco_entrega")
-    private Set<Pedido> pedidos = new HashSet<>();    
+    private EstadoEndereco estadoEndereco;     
     
     public Endereco() {
 		super();
@@ -69,7 +52,7 @@ public class Endereco implements Serializable{
 		this.uf = uf;
 		this.cep = cep;
 		this.estadoEndereco = estado;
-		setCliente(cliente);
+//		setCliente(cliente);
 	}
 
 
@@ -145,13 +128,6 @@ public class Endereco implements Serializable{
 		this.estadoEndereco = estadoEndereco;
 	}
 
-	public Set<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(Set<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
 
 	public Long getIdEndereco() {
 		return idEndereco;
@@ -159,17 +135,5 @@ public class Endereco implements Serializable{
 
 	public void setIdEndereco(Long idEndereco) {
 		this.idEndereco = idEndereco;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Cliente getCliente() {
-		return this.cliente; 
-	}
-	
-	public EnderecoDTO toDTO() {
-		return new EnderecoDTO(this);
 	}
 }
