@@ -1,18 +1,18 @@
 package br.com.ecommerce.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-
+import org.springframework.cache.annotation.Caching;
+import org.springframework.stereotype.Component;
 import br.com.ecommerce.model.Cliente;
-import br.com.ecommerce.model.Endereco;
 import br.com.ecommerce.repository.ClienteRepository;
 
 
-@Service
+@Component
 public class ClienteService implements IClienteService {
 	@Autowired
 	private ClienteRepository clienteRepository;
@@ -22,10 +22,16 @@ public class ClienteService implements IClienteService {
 		System.out.println("getClienteByCpf()");		
 		return clienteRepository.findByCpf(cpf);
 	}
+	
 	@Override		
 	public Cliente getClienteByCodigo(Integer codigo) {
-		System.out.println("getClienteByCodigo()");		
-		return clienteRepository.findByCodigoCliente(codigo);
+		System.out.println("getClienteByCodigo()");	
+		Cliente c = clienteRepository.findByCodigoCliente(codigo);
+		if (c != null) {
+			return c;
+		}else {
+			throw new NoSuchElementException("Não foi encontrado cliente com esse código");
+		}
 	}
 	
 	
@@ -49,7 +55,10 @@ public class ClienteService implements IClienteService {
 	}
     
 	@Override	
-	@CacheEvict(value= "NomeCliente", key= "#cliente.codigo")    
+	@Caching( evict = {  
+						@CacheEvict(value = "allPedidosCache", allEntries = true),
+						@CacheEvict(value = "pedidoCache", allEntries = true)
+			           })	
 	public Cliente updateCliente(Cliente cliente) {
 		System.out.println("updateCliente()");		
 		return clienteRepository.save(cliente);
@@ -60,4 +69,11 @@ public class ClienteService implements IClienteService {
 		return (List<Cliente>) clienteRepository.findAll();
 	}
 
+	@Override
+	@CacheEvict(value= "NomeCliente", key= "#cliente.codigo")
+	public void deleteCliente(Integer codigo) {
+		System.out.println("deleteProduto()");
+		clienteRepository.delete(clienteRepository.findById(codigo).get());
+	}
+	
 } 

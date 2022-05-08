@@ -1,7 +1,11 @@
 package br.com.ecommerce.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,27 +27,6 @@ public class EnderecoController {
 
 	@Autowired
 	private IEnderecoService enderecoService;
-
-//	@GetMapping("enderecos/all")
-//	public ResponseEntity<List<EnderecoDTO>> getAllEnderecos() {
-//		List<Endereco> listaEnderecos = enderecoService.getAllEnderecos();
-//		List<EnderecoDTO> ends = new ArrayList<EnderecoDTO>();
-//		for (Endereco e: listaEnderecos) {
-//			Cliente cliente = e.getCliente();
-//			if(cliente != null) {
-//				ClienteDTO cli = new ClienteDTO();
-//				cli.setNome(cliente.getNome());
-//				cli.setCodigo(cliente.getCodigo());
-//				cli.setCpf(cliente.getCpf());
-//				cli.setDataNascimento(cliente.getDataNascimento());
-//				cli.setEmail(cliente.getEmail());
-//				EnderecoDTO end = e.toDTO();
-//				end.setCliente(cli);
-//				ends.add(end);
-//			}
-//		}
-//		return new ResponseEntity<List<EnderecoDTO>>(ends, HttpStatus.OK);
-//	}
 	
 	@GetMapping("enderecos/all")
 	public ResponseEntity<List<Endereco>> getAllEnderecos() {
@@ -54,8 +37,13 @@ public class EnderecoController {
 	
 	@GetMapping("enderecos/{codigoCliente}")
 	public ResponseEntity<List<Endereco>> getEnderecoByCodigo(@PathVariable("codigoCliente") Integer codigo) {
-		List<Endereco> enderecos = enderecoService.findByCliente(codigo);
-		return new ResponseEntity<List<Endereco>>(enderecos, HttpStatus.OK);
+		List<Endereco> enderecos = new ArrayList<Endereco>();
+		try {
+			enderecos = enderecoService.findByCliente(codigo);
+			return new ResponseEntity<List<Endereco>>(enderecos, HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<List<Endereco>>(enderecos, HttpStatus.NOT_FOUND);
+		}
 	}
 
 
@@ -75,8 +63,12 @@ public class EnderecoController {
 
 	@DeleteMapping("endereco/{idEndereco}")
 	public ResponseEntity<Void> deleteEndereco(@PathVariable("idEndereco") Long idEndereco) {
-		enderecoService.deleteEndereco(idEndereco);
-		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		try {
+			enderecoService.deleteEndereco(idEndereco);
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}catch(DataIntegrityViolationException e) {
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }

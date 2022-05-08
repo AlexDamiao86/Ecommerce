@@ -12,5 +12,6 @@ public interface IEnderecoService {
 	 List<Endereco> findByLogradouro(String logradouro);
 	 List<Endereco> findByCliente(Integer idCliente);
 	 Endereco updateEndereco(Endereco end);
+	 boolean existePedidoEndereco(Long idEndereco);
 	 void deleteEndereco(Long idEndereco);
 }

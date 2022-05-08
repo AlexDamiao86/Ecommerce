@@ -35,7 +35,7 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "codigoPedido_FK")
 	private Set<ItemPedido> itemPedidos = new LinkedHashSet<ItemPedido>();
 	
-	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name = "IdEndereco_FK")
 	private Endereco enderecoEntrega;
 	
@@ -53,7 +53,6 @@ public class Pedido implements Serializable {
 		this.codigo = codigo;
 		this.data_pedido = data_pedido;
 		this.setItemPedidos(itemPedido);
-		itemPedido.forEach(item -> adicionarItem(item));
 		this.estado = estado;
 	}
 
@@ -106,6 +105,7 @@ public class Pedido implements Serializable {
 	public Endereco getEnderecoEntrega() {
 		return enderecoEntrega;
 	}
+	
 	public void setEnderecoEntrega(Endereco enderecoEntrega) {
 		this.enderecoEntrega = enderecoEntrega;
 	}

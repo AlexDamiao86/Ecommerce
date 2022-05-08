@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import br.com.ecommerce.model.Endereco;
 import br.com.ecommerce.repository.EnderecoRepository;
 
@@ -17,7 +16,7 @@ public class EnderecoService implements IEnderecoService {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
+
 	@Transactional
 	public Endereco addEndereco(Endereco endereco) {
 		return enderecoRepository.save(endereco);
@@ -57,9 +56,23 @@ public class EnderecoService implements IEnderecoService {
 		return enderecoRepository.save(end);
 	}
 	
+	
+	
     @Transactional
 	public void deleteEndereco(Long idEndereco) {
+    	if (existePedidoEndereco(idEndereco)) {
+    		throw new  DataIntegrityViolationException("Não é possível deletar: endereco ainda vinculado a um pedido");
+    	}
 		enderecoRepository.deleteByIdEndereco(idEndereco);
+	}
+
+    @Transactional(readOnly = true)
+	public boolean existePedidoEndereco(Long idEndereco) {
+    	Endereco e = enderecoRepository.findEnderecoFromPedido(idEndereco);
+		if (e != null) {
+			return true;
+		}
+		return false;
 	}
 
 }

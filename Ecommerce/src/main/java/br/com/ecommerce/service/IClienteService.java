@@ -11,5 +11,6 @@ public interface IClienteService {
 	List<Cliente> getAllClientes();
 	String getNomeByCodigo(Integer codigo);
 	Cliente addCliente(Cliente Cliente);
-	Cliente updateCliente(Cliente Cliente);	
+	Cliente updateCliente(Cliente Cliente);
+	void deleteCliente(Integer codigo);	
 }

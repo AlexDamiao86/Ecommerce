@@ -46,10 +46,6 @@ public class Cliente implements Serializable {
 	@JoinColumn(name="codigo_cliente_fk")
 	private Set<Endereco> enderecos = new LinkedHashSet<Endereco>();	
 	
-	//@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	//@JoinColumn(name = "codigo_cliente_fk")
-//	private Set<Pedido> pedidos = new LinkedHashSet<Pedido>();
-	
 		
 	public Cliente() {
 		super();
@@ -72,16 +68,15 @@ public class Cliente implements Serializable {
 	}
 	
 	
-//	@Override
-//	public String toString() {
-//		return "\\nCliente [codigo=" + codigo + 
-//			   "\\nNome=" + nome + 
-//			   "\\nCPF=" + cpf + 
-//			   "\\nE-mail=" + email +
-//			   "\\nData de Nascimento=" + dataNascimento + 
-//			   "\\nEnderecos=" + enderecos + 
-//			   "\\nPedidos=" + pedidos + "]";
-//	}
+	@Override
+	public String toString() {
+		return "\\nCliente [codigo=" + codigo + 
+			   "\\nNome=" + nome + 
+			   "\\nCPF=" + cpf + 
+			   "\\nE-mail=" + email +
+			   "\\nData de Nascimento=" + dataNascimento + 
+			   "\\nEnderecos=" + enderecos+"]";
+	}
 
 	public Integer getCodigo() {
 		return codigo;
@@ -131,10 +126,4 @@ public class Cliente implements Serializable {
 		this.enderecos = enderecos;
 	}
 
-//	public Set<Pedido> getPedidos() {
-//		return pedidos;
-//	}
-//	public void setPedidos(Set<Pedido> pedidos) {
-//		this.pedidos = pedidos;
-//	}
 }

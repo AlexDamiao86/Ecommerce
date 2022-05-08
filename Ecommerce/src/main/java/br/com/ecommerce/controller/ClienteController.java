@@ -1,13 +1,17 @@
 package br.com.ecommerce.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,19 +35,36 @@ public class ClienteController {
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 	
-//	@GetMapping("clientes/all")
-//	public ResponseEntity<List<ClienteDTO>> getAllEnderecos() {
-//		List<Cliente> listaClientes = clienteService.getAllClientes();
-//		List<ClienteDTO> listaCli =  new ArrayList<ClienteDTO>();
-//		for(Cliente c : listaClientes) {
-//			listaCli.add(c.toDTO());
-//		}
-//		return new ResponseEntity<List<ClienteDTO>>(listaCli, HttpStatus.OK);
-//	}
-	
 	@GetMapping("clientes/all")
-	public ResponseEntity<List<Cliente>> getAllEnderecos() {
+	public ResponseEntity<List<Cliente>> getAllClientes() {
 		List<Cliente> listaClientes = clienteService.getAllClientes();
 		return new ResponseEntity<List<Cliente>>(listaClientes, HttpStatus.OK);
+	}
+	
+	@PutMapping("cliente")
+	public ResponseEntity<Cliente> updateCliente(@RequestBody Cliente cliente) {
+		clienteService.updateCliente(cliente);
+		return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("cliente/{codigo}")
+	public ResponseEntity<Void> deleteCliente(@PathVariable("codigo") Integer codigo) {
+		try {
+			clienteService.deleteCliente(codigo);
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}catch(IllegalArgumentException e) {
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("cliente/{codigo}")
+	public ResponseEntity<Cliente> getClienteByCodigo(@PathVariable("codigo") Integer codigo) {
+		Cliente cliente = new Cliente();
+		try {
+			cliente = clienteService.getClienteByCodigo(codigo);
+			return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Cliente>(cliente, HttpStatus.NOT_FOUND);
+		}
 	}
 }

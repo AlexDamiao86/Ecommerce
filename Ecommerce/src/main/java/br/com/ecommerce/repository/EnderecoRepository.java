@@ -24,4 +24,7 @@ public interface EnderecoRepository extends CrudRepository<Endereco, Long>{
 	@Query("DELETE FROM Endereco e WHERE e.idEndereco = :idEndereco")
 	void deleteByIdEndereco(@Param("idEndereco") Long idEndereco);
 
+	@Query("SELECT e FROM Pedido p, Endereco e WHERE (p.enderecoEntrega.idEndereco = :idEndereco) AND (p.enderecoEntrega.idEndereco = e.idEndereco)")
+	Endereco findEnderecoFromPedido(@Param("idEndereco") Long idEndereco);
+	
 }

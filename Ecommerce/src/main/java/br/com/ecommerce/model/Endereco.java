@@ -52,7 +52,6 @@ public class Endereco implements Serializable{
 		this.uf = uf;
 		this.cep = cep;
 		this.estadoEndereco = estado;
-//		setCliente(cliente);
 	}
 
 
